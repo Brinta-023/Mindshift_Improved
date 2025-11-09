@@ -12,7 +12,7 @@ export default function Hero() {
       {/* Background Image with Overlay */}
       <div className="absolute inset-0">
         <img
-          src="https://images.pexels.com/photos/4599227/pexels-photo-4599227.jpeg?auto=compress&cs=tinysrgb&w=1920"
+          src="/unnamed copy.jpg"
           alt="Solitary person on bench in expansive garden"
           className="w-full h-full object-cover"
         />
