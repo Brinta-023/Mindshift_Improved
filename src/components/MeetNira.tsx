@@ -43,15 +43,15 @@ export default function MeetNira() {
         <div className="max-w-2xl mx-auto">
           <div className="relative">
             <div className="relative z-10 bg-white/70 backdrop-blur-xl rounded-[2.5rem] shadow-2xl border border-lavender-100/30 overflow-hidden">
-              <div className="bg-gradient-to-r from-sage-400/90 via-lavender-300/80 to-mint-400/90 p-6 flex items-center justify-between backdrop-blur-sm">
+              <div className="bg-forest p-6 flex items-center justify-between">
                 <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 bg-white/95 rounded-full flex items-center justify-center shadow-lg animate-pulse-gentle">
-                    <Bot className="w-8 h-8 text-sage-500" strokeWidth={1.5} />
+                  <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-lg animate-pulse-gentle">
+                    <Bot className="w-8 h-8 text-forest" strokeWidth={1.5} />
                   </div>
                   <div>
                     <h3 className="text-white font-semibold text-lg tracking-wide">nira</h3>
                     <div className="flex items-center gap-2">
-                      <div className="w-2.5 h-2.5 bg-mint-200 rounded-full animate-pulse"></div>
+                      <div className="w-2.5 h-2.5 bg-white rounded-full animate-pulse"></div>
                       <span className="text-white/90 text-sm lowercase">here with you</span>
                     </div>
                   </div>
