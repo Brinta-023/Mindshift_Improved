@@ -102,7 +102,7 @@ export default function MeetNira() {
                   <input
                     type="text"
                     placeholder="take your time... share what's on your mind"
-                    className="flex-1 px-6 py-3.5 rounded-[2rem] border-2 border-sage-200/40 focus:outline-none focus:ring-2 focus:ring-lavender-300/40 focus:border-transparent transition-all text-sm text-soft-gray placeholder:text-gentle-gray/40 bg-white/80 backdrop-blur-sm lowercase"
+                    className="flex-1 px-6 py-3.5 rounded-[2rem] border border-forest focus:outline-none focus:ring-2 focus:ring-forest/30 focus:border-forest transition-all text-sm text-soft-gray placeholder:text-gentle-gray/50 bg-white lowercase"
                     disabled
                   />
                   <button className="w-12 h-12 bg-gradient-to-r from-sage-400 to-mint-400 text-white rounded-full hover:shadow-lg hover:scale-105 transition-all flex items-center justify-center flex-shrink-0">
