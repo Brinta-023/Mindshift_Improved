@@ -35,7 +35,7 @@ export default function MeetNira() {
           <p className="text-xl text-gentle-gray/70 max-w-2xl mx-auto font-serif italic">
             a gentle presence, here to hold space for you
           </p>
-          <p className="text-sm text-gentle-gray/50 lowercase">
+          <p className="text-sm text-forest/50 lowercase">
             your calm corner awaits
           </p>
         </div>
@@ -116,7 +116,7 @@ export default function MeetNira() {
           </div>
         </div>
 
-        <div className="text-center mt-12 text-gentle-gray/50 text-sm italic lowercase animate-pulse-gentle">
+        <div className="text-center mt-12 text-forest/50 text-sm lowercase animate-pulse-gentle">
           you're doing great ✨
         </div>
       </div>
