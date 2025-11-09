@@ -12,10 +12,10 @@ export default function Header({ isDark, setIsDark }: HeaderProps) {
       <nav className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <div className="bg-gradient-to-br from-sage-500 to-mint-500 p-1 rounded-pebble">
+            <div className="bg-forest p-1 rounded-pebble">
               <Brain className="w-9 h-9 text-white" strokeWidth={2.5} />
             </div>
-            <span className="text-2xl font-bold bg-gradient-to-r from-sage-600 to-mint-600 bg-clip-text text-transparent tracking-tight">
+            <span className="text-2xl font-bold text-forest tracking-tight">
               MindShift
             </span>
           </div>
@@ -39,7 +39,7 @@ export default function Header({ isDark, setIsDark }: HeaderProps) {
             <Link to="/login" className="px-4 py-2 text-warm-gray hover:text-sage-600 transition-colors font-medium">
               Login
             </Link>
-            <Link to="/signup" className="px-6 py-2 bg-gradient-to-r from-sage-500 to-mint-500 text-white rounded-pebble hover:from-sage-600 hover:to-mint-600 transition-all hover:shadow-lg font-medium">
+            <Link to="/signup" className="px-6 py-2 bg-forest text-white rounded-pebble hover:bg-forest-light transition-all hover:shadow-lg font-medium">
               Sign Up
             </Link>
           </div>
