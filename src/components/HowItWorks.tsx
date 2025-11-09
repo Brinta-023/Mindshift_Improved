@@ -95,15 +95,8 @@ export default function HowItWorks() {
   };
 
   const getStepPosition = (index: number) => {
-    const progress = (index + 1) / (steps.length + 1);
-    const distance = progress * pathLength;
-    const point = getPathPointAtDistance(distance);
-
     const isLeft = index % 2 === 0;
-
     return {
-      x: point.x,
-      y: point.y,
       isLeft
     };
   };
@@ -241,55 +234,28 @@ export default function HowItWorks() {
           </p>
         </div>
 
-        <div className="space-y-[30vh] pb-32">
+        <div className="space-y-0 pb-32 relative">
           {steps.map((step, index) => {
             const Icon = step.icon;
             const position = getStepPosition(index);
             const isActive = index === activeStep;
             const hasBeenActive = index <= activeStep;
+            const isLast = index === steps.length - 1;
 
             return (
-              <div
-                key={step.number}
-                ref={(el) => (stepRefs.current[index] = el)}
-                className="flex justify-center items-center relative"
-                style={{ minHeight: '25vh' }}
-              >
-                <svg
-                  className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none z-0"
-                  width="200"
-                  height="100"
-                  style={{
-                    opacity: hasBeenActive ? 0.4 : 0.1,
-                    transition: 'opacity 0.7s ease-out',
-                  }}
-                >
-                  <line
-                    x1={position.isLeft ? '150' : '50'}
-                    y1="50"
-                    x2="100"
-                    y2="50"
-                    stroke="url(#pathGradient)"
-                    strokeWidth="2"
-                    strokeDasharray="5 5"
-                    className="transition-all duration-700"
-                  />
-                  <circle
-                    cx="100"
-                    cy="50"
-                    r="4"
-                    fill={hasBeenActive ? '#6b8a6b' : '#d1ddd1'}
-                    className="transition-all duration-500"
-                  />
-                </svg>
-
+              <div key={step.number} className="relative">
                 <div
-                  className="transition-all duration-700 ease-out relative z-10"
-                  style={{
-                    transform: `translateX(${position.isLeft ? '-50%' : '50%'}) scale(${isActive ? 1 : hasBeenActive ? 0.95 : 0.85})`,
-                    opacity: hasBeenActive ? 1 : 0.3,
-                  }}
+                  ref={(el) => (stepRefs.current[index] = el)}
+                  className="flex justify-center items-center relative"
+                  style={{ minHeight: '40vh', paddingTop: index === 0 ? '0' : '8vh', paddingBottom: '8vh' }}
                 >
+                  <div
+                    className="transition-all duration-700 ease-out relative z-10"
+                    style={{
+                      transform: `translateX(${position.isLeft ? '-25%' : '25%'}) scale(${isActive ? 1 : hasBeenActive ? 0.95 : 0.85})`,
+                      opacity: hasBeenActive ? 1 : 0.3,
+                    }}
+                  >
                   <div
                     className={`bg-white/80 backdrop-blur-sm p-8 rounded-[2rem] shadow-xl border-2 transition-all relative w-80 group hover:shadow-2xl hover:-translate-y-1 ${
                       isActive
@@ -336,7 +302,23 @@ export default function HowItWorks() {
                       />
                     </div>
                   </div>
+                  </div>
                 </div>
+
+                {!isLast && (
+                  <div className="absolute left-1/2 -translate-x-1/2 w-1 h-32 z-0" style={{ top: '60%' }}>
+                    <div
+                      className="w-full h-full bg-gradient-to-b from-sage-400 to-mint-400 transition-all duration-700 rounded-full"
+                      style={{
+                        opacity: hasBeenActive ? 0.5 : 0.15,
+                        transform: `scaleY(${hasBeenActive ? 1 : 0})`,
+                        transformOrigin: 'top',
+                      }}
+                    />
+                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-sage-400" style={{ opacity: hasBeenActive ? 0.8 : 0.2 }} />
+                    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-mint-400" style={{ opacity: hasBeenActive && index < activeStep ? 0.8 : 0.2 }} />
+                  </div>
+                )}
               </div>
             );
           })}
