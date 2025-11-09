@@ -5,11 +5,8 @@ export default function AboutUs() {
   return (
     <section id="about" className="py-20 px-6 bg-gradient-to-b from-mint-50/20 via-warm-white to-sage-50/30 relative overflow-hidden">
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-1/4 left-10 w-32 h-32 opacity-60 animate-float">
-          <MoodIcon mood="peaceful" style={{ animationDelay: '0s' }} />
-        </div>
-        <div className="absolute bottom-1/4 right-10 w-28 h-28 opacity-65 animate-float">
-          <MoodIcon mood="confident" style={{ animationDelay: '2s' }} />
+        <div className="absolute top-1/3 right-12 w-20 h-20 opacity-35 animate-float">
+          <MoodIcon mood="peaceful" style={{ animationDelay: '1s' }} />
         </div>
       </div>
 
@@ -17,9 +14,6 @@ export default function AboutUs() {
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="animate-fade-in">
             <div className="inline-flex items-center gap-2 mb-6">
-              <div className="w-10 h-10 opacity-80 animate-pulse-gentle">
-                <MoodIcon mood="happy" />
-              </div>
               <h2 className="text-4xl md:text-5xl font-bold text-forest">
                 About MindShift
               </h2>
@@ -46,9 +40,6 @@ export default function AboutUs() {
 
           <div className="space-y-6">
             <div className="bg-white/80 backdrop-blur-sm p-6 rounded-[2rem] border-2 border-sage-100/50 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all group relative overflow-hidden animate-fade-in" style={{ animationDelay: '0.1s' }}>
-              <div className="absolute -right-6 -bottom-6 w-20 h-20 opacity-30 group-hover:opacity-50 transition-opacity">
-                <MoodIcon mood="confident" />
-              </div>
               <div className="flex items-start gap-4 relative">
                 <div className="w-14 h-14 bg-gradient-to-br from-sage-500 to-mint-500 rounded-[1.5rem] flex items-center justify-center flex-shrink-0 shadow-md group-hover:scale-110 transition-transform">
                   <Shield className="w-7 h-7 text-white" strokeWidth={2} />
@@ -63,9 +54,6 @@ export default function AboutUs() {
             </div>
 
             <div className="bg-white/80 backdrop-blur-sm p-6 rounded-[2rem] border-2 border-mint-100/50 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all group relative overflow-hidden animate-fade-in" style={{ animationDelay: '0.2s' }}>
-              <div className="absolute -right-6 -bottom-6 w-20 h-20 opacity-30 group-hover:opacity-50 transition-opacity">
-                <MoodIcon mood="calm" />
-              </div>
               <div className="flex items-start gap-4 relative">
                 <div className="w-14 h-14 bg-gradient-to-br from-mint-500 to-sage-500 rounded-[1.5rem] flex items-center justify-center flex-shrink-0 shadow-md group-hover:scale-110 transition-transform">
                   <Award className="w-7 h-7 text-white" strokeWidth={2} />
@@ -80,9 +68,6 @@ export default function AboutUs() {
             </div>
 
             <div className="bg-white/80 backdrop-blur-sm p-6 rounded-[2rem] border-2 border-beige-100/50 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all group relative overflow-hidden animate-fade-in" style={{ animationDelay: '0.3s' }}>
-              <div className="absolute -right-6 -bottom-6 w-20 h-20 opacity-30 group-hover:opacity-50 transition-opacity">
-                <MoodIcon mood="energetic" />
-              </div>
               <div className="flex items-start gap-4 relative">
                 <div className="w-14 h-14 bg-gradient-to-br from-beige-500 to-sage-500 rounded-[1.5rem] flex items-center justify-center flex-shrink-0 shadow-md group-hover:scale-110 transition-transform">
                   <Users className="w-7 h-7 text-white" strokeWidth={2} />

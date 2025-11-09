@@ -105,17 +105,11 @@ export default function HowItWorks() {
   return (
     <section id="how-it-works" ref={sectionRef} className="relative py-32 px-6 bg-gradient-to-b from-warm-white via-sage-50/30 to-mint-50/20 overflow-hidden">
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-20 left-10 w-32 h-32 opacity-60 animate-float">
-          <MoodIcon mood="happy" style={{ animationDelay: '0s' }} />
+        <div className="absolute top-1/4 right-16 w-20 h-20 opacity-40 animate-float">
+          <MoodIcon mood="happy" style={{ animationDelay: '2s' }} />
         </div>
-        <div className="absolute top-1/3 right-20 w-24 h-24 opacity-70 animate-float">
-          <MoodIcon mood="calm" style={{ animationDelay: '2s' }} />
-        </div>
-        <div className="absolute bottom-1/4 left-1/4 w-20 h-20 opacity-65 animate-float">
-          <MoodIcon mood="peaceful" style={{ animationDelay: '4s' }} />
-        </div>
-        <div className="absolute bottom-40 right-1/3 w-28 h-28 opacity-60 animate-float">
-          <MoodIcon mood="energetic" style={{ animationDelay: '6s' }} />
+        <div className="absolute bottom-1/3 left-16 w-20 h-20 opacity-40 animate-float">
+          <MoodIcon mood="calm" style={{ animationDelay: '5s' }} />
         </div>
       </div>
 
@@ -228,15 +222,9 @@ export default function HowItWorks() {
       <div className="container mx-auto max-w-7xl relative" style={{ zIndex: 1 }}>
         <div className="text-center mb-24 animate-fade-in">
           <div className="inline-flex items-center gap-2 mb-4">
-            <div className="w-10 h-10 opacity-80 animate-float">
-              <MoodIcon mood="confident" />
-            </div>
             <h2 className="text-4xl md:text-5xl font-bold text-forest">
               Your Path to Growth
             </h2>
-            <div className="w-10 h-10 opacity-80 animate-float" style={{ animationDelay: '1s' }}>
-              <MoodIcon mood="creative" />
-            </div>
           </div>
           <p className="text-xl text-gentle-gray/70 max-w-2xl mx-auto font-serif italic">
             Like a vine reaching toward the sun, each step winds naturally along your journey toward wellness
@@ -281,9 +269,6 @@ export default function HowItWorks() {
                       <Icon className="w-8 h-8 text-white" strokeWidth={2.5} />
                     </div>
 
-                    <div className={`absolute ${position.isLeft ? '-right-8' : '-left-8'} top-8 w-12 h-12 opacity-70 animate-pulse-gentle`}>
-                      <MoodIcon mood={(['happy', 'calm', 'energetic', 'peaceful', 'confident', 'creative'] as MoodType[])[index % 6]} />
-                    </div>
 
                     <div className="flex items-center gap-2 mb-4 pt-6">
                       <div className="flex items-center gap-1.5">
