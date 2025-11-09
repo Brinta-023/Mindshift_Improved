@@ -54,7 +54,7 @@ export default function Hero() {
               </span>
             </h1>
 
-            <p className="text-2xl md:text-3xl text-gentle-gray/80 leading-relaxed max-w-3xl mx-auto font-serif italic" style={{ animationDelay: '0.2s' }}>
+            <p className="text-2xl md:text-3xl text-forest leading-relaxed max-w-3xl mx-auto font-serif animate-fade-in" style={{ animationDelay: '0.2s' }}>
               you're not alone. let's reframe those thoughts and reshape your world.
             </p>
 
