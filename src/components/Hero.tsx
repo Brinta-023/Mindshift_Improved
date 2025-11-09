@@ -9,14 +9,14 @@ export default function Hero() {
 
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center px-6 overflow-hidden">
-      {/* Background Image with Overlay */}
+      {/* Abstract Background */}
       <div className="absolute inset-0">
-        <img
-          src="https://images.pexels.com/photos/4599227/pexels-photo-4599227.jpeg?auto=compress&cs=tinysrgb&w=1920"
-          alt="Solitary person on bench in expansive garden"
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/40"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-[#1a3a2e] via-[#2d5f4f] to-[#1a3a2e]"></div>
+        <div className="absolute inset-0 opacity-30">
+          <div className="absolute top-0 -left-4 w-96 h-96 bg-[#3d7f6f] rounded-full mix-blend-multiply filter blur-3xl animate-blob"></div>
+          <div className="absolute top-0 -right-4 w-96 h-96 bg-[#2d5f4f] rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000"></div>
+          <div className="absolute -bottom-8 left-20 w-96 h-96 bg-[#1a3a2e] rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-4000"></div>
+        </div>
       </div>
 
       {/* Content */}
