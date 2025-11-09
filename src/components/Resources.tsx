@@ -75,10 +75,10 @@ export default function Resources() {
               If you're experiencing a mental health crisis, please reach out to a trained professional immediately.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
-              <a href="tel:988" className="bg-white text-forest px-8 py-3 rounded-pebble font-bold hover:shadow-lg transition-all">
+              <a href="tel:988" className="bg-forest text-white px-8 py-3 rounded-pebble font-bold hover:bg-forest-light hover:shadow-lg transition-all">
                 Call 988 (US)
               </a>
-              <a href="tel:911" className="bg-white text-forest px-8 py-3 rounded-pebble font-bold hover:shadow-lg transition-all">
+              <a href="tel:911" className="bg-forest text-white px-8 py-3 rounded-pebble font-bold hover:bg-forest-light hover:shadow-lg transition-all">
                 Emergency: 911
               </a>
               <a href="#" className="bg-forest-dark text-white px-8 py-3 rounded-pebble font-bold hover:bg-forest-light transition-all">
