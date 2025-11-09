@@ -31,28 +31,23 @@ export default function Hero() {
       {/* Content */}
       <div className="container mx-auto max-w-5xl relative z-10">
         <div className="text-center space-y-8 animate-fade-in">
-          {/* Headline with liquid glass backing */}
-          <div className="liquid-glass-content-card p-8 rounded-[3rem]">
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tight text-sage-50 drop-shadow-2xl">
-              hey, feeling a little heavy lately?
-            </h1>
-          </div>
+          {/* Headline */}
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tight text-white drop-shadow-2xl">
+            hey, feeling a little heavy lately?
+          </h1>
 
           {/* Sub-headline */}
-          <div className="liquid-glass-content-card p-6 rounded-[2.5rem]">
-            <p className="text-xl md:text-2xl lg:text-3xl leading-relaxed max-w-3xl mx-auto text-sage-50/95 font-light drop-shadow-lg">
-              you're not alone. let's reframe those thoughts and reshape your world.
-            </p>
-          </div>
+          <p className="text-xl md:text-2xl lg:text-3xl leading-relaxed max-w-3xl mx-auto text-white/95 font-light drop-shadow-lg">
+            you're not alone. let's reframe those thoughts and reshape your world.
+          </p>
 
           {/* Call-to-Action Button */}
           <div className="pt-6 animate-fade-in" style={{ animationDelay: '0.3s' }}>
             <button
               onClick={handleStartJourney}
-              className="liquid-glass-cta-button"
+              className="px-12 py-5 bg-sage-600 text-white text-lg font-medium rounded-full hover:bg-sage-500 transition-all duration-300 hover:shadow-2xl hover:shadow-sage-900/30 hover:scale-105 active:scale-95"
             >
-              <span className="relative z-10">Start Your Journey</span>
-              <div className="absolute inset-0 bg-gradient-to-r from-sage-400/20 to-mint-500/20 rounded-full transform scale-0 group-hover:scale-100 transition-transform duration-500"></div>
+              Start Your Journey
             </button>
           </div>
         </div>
