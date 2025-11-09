@@ -36,7 +36,7 @@ export default function Resources() {
     <section id="resources" className="py-20 px-6 bg-gradient-to-br from-peach-50/30 via-warm-white to-mint-50/20">
       <div className="container mx-auto max-w-7xl">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-warm-gray mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold text-forest mb-4">
             Mental Health Resources
           </h2>
           <p className="text-xl text-warm-gray/70 max-w-3xl mx-auto">
@@ -53,7 +53,7 @@ export default function Resources() {
                 href={resource.link}
                 className="bg-white/80 backdrop-blur-sm p-6 rounded-pebble shadow-lg border border-sage-100/50 hover:shadow-xl transition-all hover:-translate-y-1 group flex items-start gap-4"
               >
-                <div className={`w-14 h-14 bg-gradient-to-br ${resource.gradient} rounded-pebble flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform shadow-md`}>
+                <div className="w-14 h-14 bg-forest rounded-pebble flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform shadow-md">
                   <Icon className="w-7 h-7 text-white" strokeWidth={2} />
                 </div>
                 <div className="flex-1">
@@ -68,18 +68,20 @@ export default function Resources() {
           })}
         </div>
 
-        <div className="mt-12 bg-gradient-to-r from-sage-500 via-mint-500 to-sage-400 p-8 rounded-pebble-lg text-white text-center shadow-xl relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-br from-peach-200/10 to-lavender-200/10"></div>
-          <div className="relative z-10">
+        <div className="mt-12 bg-forest p-8 rounded-pebble-lg text-white text-center shadow-xl">
+          <div>
             <h3 className="text-2xl font-bold mb-3">Need to Talk to Someone Now?</h3>
             <p className="text-white/90 mb-6 max-w-2xl mx-auto leading-relaxed">
               If you're experiencing a mental health crisis, please reach out to a trained professional immediately.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
-              <a href="tel:988" className="bg-white text-sage-700 px-8 py-3 rounded-pebble font-bold hover:shadow-lg transition-all">
-                Call 988 (US Crisis Line)
+              <a href="tel:988" className="bg-white text-forest px-8 py-3 rounded-pebble font-bold hover:shadow-lg transition-all">
+                Call 988 (US)
               </a>
-              <a href="#" className="bg-sage-700 text-white px-8 py-3 rounded-pebble font-bold hover:bg-sage-800 transition-all">
+              <a href="tel:911" className="bg-white text-forest px-8 py-3 rounded-pebble font-bold hover:shadow-lg transition-all">
+                Emergency: 911
+              </a>
+              <a href="#" className="bg-forest-dark text-white px-8 py-3 rounded-pebble font-bold hover:bg-forest-light transition-all">
                 International Resources
               </a>
             </div>
