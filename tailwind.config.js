@@ -6,8 +6,11 @@ export default {
     extend: {
       colors: {
         'warm-white': '#FAF9F7',
+        'cream': '#F5F3F0',
         'soft-gray': '#5A5A5A',
         'gentle-gray': '#8B8B8B',
+        'warm-black': '#1a1a1a',
+        'elegant-gray': '#2d2d2d',
         'sage': {
           50: '#f5f7f5',
           100: '#e8ede8',
@@ -90,6 +93,11 @@ export default {
         'sans': ['Quicksand', 'Nunito', 'system-ui', '-apple-system', 'sans-serif'],
         'body': ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
         'serif': ['Lora', 'Georgia', 'serif'],
+        'display': ['Quicksand', 'system-ui', 'sans-serif'],
+      },
+      fontSize: {
+        'display': ['3.5rem', { lineHeight: '1.1', letterSpacing: '-0.02em' }],
+        'display-sm': ['2.5rem', { lineHeight: '1.2', letterSpacing: '-0.01em' }],
       },
       borderRadius: {
         'pebble': '2rem',
