@@ -9,14 +9,26 @@ export default function Hero() {
 
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center px-6 overflow-hidden">
-      {/* Abstract Background */}
+      {/* Liquid Glass Background */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-br from-[#1a3a2e] via-[#2d5f4f] to-[#1a3a2e]"></div>
-        <div className="absolute inset-0 opacity-30">
-          <div className="absolute top-0 -left-4 w-96 h-96 bg-[#3d7f6f] rounded-full mix-blend-multiply filter blur-3xl animate-blob"></div>
-          <div className="absolute top-0 -right-4 w-96 h-96 bg-[#2d5f4f] rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000"></div>
-          <div className="absolute -bottom-8 left-20 w-96 h-96 bg-[#1a3a2e] rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-4000"></div>
+
+        {/* Liquid glass morphing shapes */}
+        <div className="absolute inset-0">
+          <div className="absolute top-0 -left-20 w-[500px] h-[500px] bg-gradient-to-br from-[#3d7f6f]/40 to-[#2d5f4f]/40 rounded-full mix-blend-overlay filter blur-[100px] animate-liquid-1"></div>
+          <div className="absolute top-20 -right-20 w-[600px] h-[600px] bg-gradient-to-br from-[#4a9f8f]/30 to-[#3d7f6f]/30 rounded-full mix-blend-overlay filter blur-[120px] animate-liquid-2"></div>
+          <div className="absolute -bottom-20 left-1/4 w-[550px] h-[550px] bg-gradient-to-br from-[#2d5f4f]/35 to-[#1a3a2e]/35 rounded-full mix-blend-overlay filter blur-[110px] animate-liquid-3"></div>
+          <div className="absolute bottom-1/3 right-1/4 w-[450px] h-[450px] bg-gradient-to-br from-[#5abfa5]/25 to-[#3d7f6f]/25 rounded-full mix-blend-overlay filter blur-[100px] animate-liquid-4"></div>
         </div>
+
+        {/* Glass reflection overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-white/5 backdrop-blur-[2px]"></div>
+
+        {/* Subtle shine effect */}
+        <div className="absolute inset-0 opacity-20 animate-glass-shine" style={{
+          background: 'linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.3) 50%, transparent 70%)',
+          backgroundSize: '200% 100%'
+        }}></div>
       </div>
 
       {/* Content */}
