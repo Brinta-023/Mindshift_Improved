@@ -1,4 +1,4 @@
-import { Bot, User, Mic, Smile, ArrowRight, Heart } from 'lucide-react';
+import { Bot, User, Mic, Smile, ArrowRight, Heart, Leaf, Flower2 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
 export default function MeetNira() {
@@ -22,9 +22,15 @@ export default function MeetNira() {
   }, [visibleMessages, messages.length]);
 
   return (
-    <section className="py-24 px-6 bg-warm-white relative overflow-hidden">
-      <div className="absolute top-20 right-10 w-32 h-32 opacity-10 animate-float">
-        <Heart className="w-full h-full text-blush-300" />
+    <section className="py-24 px-6 bg-gradient-to-b from-mint-50/20 via-warm-white to-sage-50/30 relative overflow-hidden">
+      <div className="absolute top-20 right-10 w-24 h-24 opacity-20 animate-float">
+        <Flower2 className="w-full h-full text-mint-400" />
+      </div>
+      <div className="absolute bottom-20 left-10 w-28 h-28 opacity-15 animate-float" style={{ animationDelay: '1s' }}>
+        <Leaf className="w-full h-full text-sage-400" />
+      </div>
+      <div className="absolute top-1/3 left-20 w-20 h-20 opacity-10 animate-float" style={{ animationDelay: '2s' }}>
+        <Flower2 className="w-full h-full text-mint-300" />
       </div>
 
       <div className="container mx-auto max-w-7xl">
@@ -111,13 +117,15 @@ export default function MeetNira() {
                 </div>
               </div>
             </div>
-            <div className="absolute -bottom-12 -right-12 w-80 h-80 bg-lavender-300/15 rounded-full blur-3xl animate-breathing"></div>
-            <div className="absolute -top-12 -left-12 w-80 h-80 bg-mint-300/15 rounded-full blur-3xl animate-breathing" style={{ animationDelay: '3s' }}></div>
+            <div className="absolute -bottom-12 -right-12 w-80 h-80 bg-mint-300/20 rounded-full blur-3xl animate-breathing"></div>
+            <div className="absolute -top-12 -left-12 w-80 h-80 bg-sage-300/20 rounded-full blur-3xl animate-breathing" style={{ animationDelay: '3s' }}></div>
           </div>
         </div>
 
-        <div className="text-center mt-12 text-forest/50 text-sm lowercase animate-pulse-gentle">
-          you're doing great ✨
+        <div className="text-center mt-12 flex items-center justify-center gap-2 animate-pulse-gentle">
+          <Leaf className="w-4 h-4 text-sage-400" />
+          <span className="text-forest/50 text-sm lowercase">you're doing great</span>
+          <Leaf className="w-4 h-4 text-mint-400" />
         </div>
       </div>
     </section>

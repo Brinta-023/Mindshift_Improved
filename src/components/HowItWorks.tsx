@@ -1,4 +1,4 @@
-import { UserPlus, MessageCircle, RefreshCw, BookOpen, TrendingUp, AlertCircle } from 'lucide-react';
+import { UserPlus, MessageCircle, RefreshCw, BookOpen, TrendingUp, AlertCircle, Leaf } from 'lucide-react';
 import { useEffect, useState, useRef } from 'react';
 
 const steps = [
@@ -41,9 +41,11 @@ const steps = [
 ];
 
 export default function HowItWorks() {
-  const [activeStep, setActiveStep] = useState(0);
+  const [activeStep, setActiveStep] = useState(-1);
+  const [scrollProgress, setScrollProgress] = useState(0);
   const stepRefs = useRef<(HTMLDivElement | null)[]>([]);
   const sectionRef = useRef<HTMLDivElement>(null);
+  const pathRef = useRef<SVGPathElement>(null);
 
   useEffect(() => {
     const observers = stepRefs.current.map((ref, index) => {
@@ -57,7 +59,7 @@ export default function HowItWorks() {
             }
           });
         },
-        { threshold: 0.6 }
+        { threshold: 0.5, rootMargin: '-100px 0px' }
       );
 
       observer.observe(ref);
@@ -69,130 +71,248 @@ export default function HowItWorks() {
     };
   }, []);
 
-  const ringPositions = [
-    { cx: 50, cy: 50, r: 43, angle: 90 },
-    { cx: 50, cy: 50, r: 36, angle: 150 },
-    { cx: 50, cy: 50, r: 29, angle: 210 },
-    { cx: 50, cy: 50, r: 22, angle: 270 },
-    { cx: 50, cy: 50, r: 15, angle: 330 },
-    { cx: 50, cy: 50, r: 8, angle: 30 },
-  ];
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!sectionRef.current) return;
+      const rect = sectionRef.current.getBoundingClientRect();
+      const sectionHeight = rect.height;
+      const scrolled = -rect.top;
+      const progress = Math.max(0, Math.min(1, scrolled / (sectionHeight - window.innerHeight)));
+      setScrollProgress(progress);
+    };
 
-  const getCardPosition = (index: number) => {
-    const ring = ringPositions[index];
-    const angleRad = (ring.angle * Math.PI) / 180;
-    const distance = ring.r * 10;
+    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const pathLength = pathRef.current?.getTotalLength() || 1000;
+
+  const getPathPointAtDistance = (distance: number) => {
+    if (!pathRef.current) return { x: 50, y: 20 };
+    const point = pathRef.current.getPointAtLength(distance);
+    return { x: (point.x / 1000) * 100, y: (point.y / 1000) * 100 };
+  };
+
+  const getStepPosition = (index: number) => {
+    const progress = (index + 1) / (steps.length + 1);
+    const distance = progress * pathLength;
+    const point = getPathPointAtDistance(distance);
+
+    const isLeft = index % 2 === 0;
 
     return {
-      x: Math.cos(angleRad) * distance,
-      y: Math.sin(angleRad) * distance,
+      x: point.x,
+      y: point.y,
+      isLeft
     };
   };
 
   return (
-    <section id="how-it-works" ref={sectionRef} className="relative py-32 px-6 bg-warm-white overflow-hidden">
+    <section id="how-it-works" ref={sectionRef} className="relative py-32 px-6 bg-gradient-to-b from-warm-white via-sage-50/30 to-mint-50/20 overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-20 left-10 w-32 h-32 opacity-20 animate-float">
+          <Leaf className="w-full h-full text-sage-400" style={{ animationDelay: '0s' }} />
+        </div>
+        <div className="absolute top-1/3 right-20 w-24 h-24 opacity-15 animate-float">
+          <Leaf className="w-full h-full text-mint-400" style={{ animationDelay: '2s' }} />
+        </div>
+        <div className="absolute bottom-1/4 left-1/4 w-20 h-20 opacity-10 animate-float">
+          <Leaf className="w-full h-full text-sage-300" style={{ animationDelay: '4s' }} />
+        </div>
+        <div className="absolute bottom-40 right-1/3 w-28 h-28 opacity-20 animate-float">
+          <Leaf className="w-full h-full text-mint-300" style={{ animationDelay: '6s' }} />
+        </div>
+      </div>
+
       <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
-        style={{ zIndex: 0, width: '1000px', height: '1000px' }}
+        className="absolute top-0 left-1/2 -translate-x-1/2 pointer-events-none"
+        style={{ width: '100%', maxWidth: '1200px', height: '100%' }}
       >
         <svg
-          viewBox="0 0 100 100"
-          className="w-full h-full opacity-20"
-          style={{ filter: 'drop-shadow(0 0 2px rgba(71, 91, 71, 0.1))' }}
+          viewBox="0 0 1000 1000"
+          className="w-full h-full"
+          style={{ filter: 'drop-shadow(0 2px 8px rgba(107, 138, 107, 0.15))' }}
         >
           <defs>
-            <filter id="roughen">
-              <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="3" result="noise" />
-              <feDisplacementMap in="SourceGraphic" in2="noise" scale="0.5" />
+            <linearGradient id="pathGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor="#88a788" stopOpacity="0.6" />
+              <stop offset="50%" stopColor="#5dd4ac" stopOpacity="0.5" />
+              <stop offset="100%" stopColor="#6b8a6b" stopOpacity="0.6" />
+            </linearGradient>
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+              <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
             </filter>
           </defs>
 
-          {ringPositions.map((ring, i) => {
-            const wobble = i * 0.15;
-            const isActive = i === activeStep;
+          <path
+            ref={pathRef}
+            d="M 150 100 Q 200 200, 350 250 T 650 400 Q 750 450, 700 600 T 550 800 Q 500 850, 500 900"
+            fill="none"
+            stroke="url(#pathGradient)"
+            strokeWidth="3"
+            strokeLinecap="round"
+            strokeDasharray="10 5"
+            opacity="0.3"
+            className="transition-all duration-700"
+          />
+
+          <path
+            d="M 150 100 Q 200 200, 350 250 T 650 400 Q 750 450, 700 600 T 550 800 Q 500 850, 500 900"
+            fill="none"
+            stroke="url(#pathGradient)"
+            strokeWidth="4"
+            strokeLinecap="round"
+            strokeDasharray={pathLength}
+            strokeDashoffset={pathLength * (1 - scrollProgress)}
+            filter="url(#glow)"
+            className="transition-all duration-300 ease-out"
+            style={{ opacity: 0.7 }}
+          />
+
+          {steps.map((_, index) => {
+            const position = getStepPosition(index);
+            const isActive = index <= activeStep;
+            const progress = (index + 1) / (steps.length + 1);
+            const isVisible = scrollProgress >= progress - 0.1;
+
             return (
-              <circle
-                key={i}
-                cx="50"
-                cy="50"
-                r={ring.r}
-                fill="none"
-                stroke="#4a4a4a"
-                strokeWidth={i % 2 === 0 ? "0.25" : "0.15"}
-                opacity={isActive ? 0.4 : 0}
-                filter="url(#roughen)"
-                className="transition-all duration-700 ease-in-out"
-                style={{
-                  strokeDasharray: `${wobble} ${wobble * 0.5}`,
-                  strokeLinecap: 'round',
-                  transform: isActive ? 'scale(1)' : 'scale(0.8)',
-                  transformOrigin: 'center',
-                }}
-              />
+              <g key={index} className={`transition-all duration-700 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+                <circle
+                  cx={(position.x / 100) * 1000}
+                  cy={(position.y / 100) * 1000}
+                  r="8"
+                  fill={isActive ? '#6b8a6b' : '#d1ddd1'}
+                  className="transition-all duration-500"
+                />
+                <circle
+                  cx={(position.x / 100) * 1000}
+                  cy={(position.y / 100) * 1000}
+                  r="14"
+                  fill="none"
+                  stroke={isActive ? '#6b8a6b' : '#d1ddd1'}
+                  strokeWidth="2"
+                  opacity="0.4"
+                  className="transition-all duration-500"
+                  style={{
+                    transform: isActive ? 'scale(1.2)' : 'scale(1)',
+                    transformOrigin: `${(position.x / 100) * 1000}px ${(position.y / 100) * 1000}px`,
+                  }}
+                />
+                {isActive && (
+                  <>
+                    <path
+                      d={`M ${(position.x / 100) * 1000 - 12} ${(position.y / 100) * 1000 - 15} Q ${(position.x / 100) * 1000 - 8} ${(position.y / 100) * 1000 - 25}, ${(position.x / 100) * 1000 - 5} ${(position.y / 100) * 1000 - 20} L ${(position.x / 100) * 1000 - 2} ${(position.y / 100) * 1000 - 18} L ${(position.x / 100) * 1000 - 7} ${(position.y / 100) * 1000 - 15} Z`}
+                      fill="#88a788"
+                      opacity="0.5"
+                      className="animate-unfurl-leaf"
+                      style={{ animationDelay: '0.1s' }}
+                    />
+                    <path
+                      d={`M ${(position.x / 100) * 1000 + 12} ${(position.y / 100) * 1000 - 10} Q ${(position.x / 100) * 1000 + 18} ${(position.y / 100) * 1000 - 18}, ${(position.x / 100) * 1000 + 15} ${(position.y / 100) * 1000 - 22} L ${(position.x / 100) * 1000 + 12} ${(position.y / 100) * 1000 - 20} L ${(position.x / 100) * 1000 + 10} ${(position.y / 100) * 1000 - 15} Z`}
+                      fill="#5dd4ac"
+                      opacity="0.5"
+                      className="animate-unfurl-leaf"
+                      style={{ animationDelay: '0.3s' }}
+                    />
+                  </>
+                )}
+              </g>
             );
           })}
         </svg>
       </div>
 
-      <div className="container mx-auto max-w-6xl relative" style={{ zIndex: 1 }}>
-        <div className="text-center mb-24">
-          <h2 className="text-4xl md:text-5xl font-bold text-forest mb-4">
-            Your Path to Growth
-          </h2>
-          <p className="text-xl text-gentle-gray/70 max-w-2xl mx-auto">
-            Like tree rings marking seasons of growth, each step expands your journey toward wellness
+      <div className="container mx-auto max-w-7xl relative" style={{ zIndex: 1 }}>
+        <div className="text-center mb-24 animate-fade-in">
+          <div className="inline-flex items-center gap-2 mb-4">
+            <Leaf className="w-8 h-8 text-sage-500 animate-float" />
+            <h2 className="text-4xl md:text-5xl font-bold text-forest">
+              Your Path to Growth
+            </h2>
+            <Leaf className="w-8 h-8 text-mint-500 animate-float" style={{ animationDelay: '1s' }} />
+          </div>
+          <p className="text-xl text-gentle-gray/70 max-w-2xl mx-auto font-serif italic">
+            Like a vine reaching toward the sun, each step winds naturally along your journey toward wellness
           </p>
         </div>
 
-        <div className="space-y-[25vh]">
+        <div className="space-y-[30vh] pb-32">
           {steps.map((step, index) => {
             const Icon = step.icon;
-            const position = getCardPosition(index);
+            const position = getStepPosition(index);
             const isActive = index === activeStep;
+            const hasBeenActive = index <= activeStep;
 
             return (
               <div
                 key={step.number}
                 ref={(el) => (stepRefs.current[index] = el)}
                 className="flex justify-center items-center relative"
-                style={{ minHeight: '20vh' }}
+                style={{ minHeight: '25vh' }}
               >
                 <div
-                  className="absolute transition-all duration-700 ease-in-out"
+                  className="transition-all duration-700 ease-out"
                   style={{
-                    left: '50%',
-                    top: '50%',
-                    transform: `translate(calc(-50% + ${position.x}px), calc(-50% + ${position.y}px)) scale(${isActive ? 1 : 0.8})`,
-                    opacity: isActive ? 1 : 0,
-                    pointerEvents: isActive ? 'auto' : 'none',
+                    transform: `translateX(${position.isLeft ? '-50%' : '50%'}) scale(${isActive ? 1 : hasBeenActive ? 0.95 : 0.85})`,
+                    opacity: hasBeenActive ? 1 : 0.3,
                   }}
                 >
-                  <div className="bg-warm-white p-6 rounded-2xl shadow-xl border-2 border-forest/10 hover:shadow-2xl hover:border-forest/20 transition-all relative w-72">
-                    <div className="absolute -top-4 -left-4 w-12 h-12 bg-forest rounded-full flex items-center justify-center shadow-lg border-3 border-warm-white">
-                      <Icon className="w-6 h-6 text-white" strokeWidth={2.5} />
+                  <div
+                    className={`bg-white/80 backdrop-blur-sm p-8 rounded-[2rem] shadow-xl border-2 transition-all relative w-80 group hover:shadow-2xl hover:-translate-y-1 ${
+                      isActive
+                        ? 'border-sage-400/60 shadow-sage-200/50'
+                        : hasBeenActive
+                        ? 'border-sage-300/30'
+                        : 'border-sage-200/20'
+                    }`}
+                    style={{
+                      animationDelay: `${index * 0.1}s`,
+                    }}
+                  >
+                    <div className="absolute -top-5 -left-5 w-16 h-16 bg-gradient-to-br from-sage-500 to-mint-500 rounded-[1.5rem] flex items-center justify-center shadow-lg border-4 border-white group-hover:scale-110 transition-transform">
+                      <Icon className="w-8 h-8 text-white" strokeWidth={2.5} />
                     </div>
 
-                    <div className="flex items-center gap-2 mb-3 pt-4">
-                      <span className="text-xs font-bold text-forest/40 uppercase tracking-wider">
-                        Step {step.number}
-                      </span>
+                    <div className={`absolute ${position.isLeft ? '-right-8' : '-left-8'} top-8 w-12 h-12 opacity-30`}>
+                      <Leaf className="w-full h-full text-sage-400 animate-pulse-gentle" />
                     </div>
 
-                    <h3 className="text-2xl font-bold text-forest mb-3">
+                    <div className="flex items-center gap-2 mb-4 pt-6">
+                      <div className="flex items-center gap-1.5">
+                        <div className={`w-2 h-2 rounded-full transition-colors ${
+                          isActive ? 'bg-sage-500 animate-pulse' : hasBeenActive ? 'bg-sage-400' : 'bg-sage-200'
+                        }`} />
+                        <span className="text-xs font-bold text-forest/50 uppercase tracking-wider">
+                          Step {step.number}
+                        </span>
+                      </div>
+                    </div>
+
+                    <h3 className="text-2xl font-bold text-forest mb-4 leading-tight">
                       {step.title}
                     </h3>
 
                     <p className="text-gentle-gray/80 leading-relaxed text-base">
                       {step.description}
                     </p>
+
+                    <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-sage-400/20 via-mint-400/20 to-sage-400/20 rounded-b-[2rem] overflow-hidden">
+                      <div
+                        className="h-full bg-gradient-to-r from-sage-500 to-mint-500 transition-all duration-700 ease-out"
+                        style={{ width: isActive ? '100%' : hasBeenActive ? '100%' : '0%' }}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
             );
           })}
         </div>
-
-        <div className="h-[20vh]"></div>
       </div>
     </section>
   );

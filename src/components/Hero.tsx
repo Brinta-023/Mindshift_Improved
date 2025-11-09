@@ -1,4 +1,4 @@
-import { QrCode, ArrowRight, Heart } from 'lucide-react';
+import { QrCode, ArrowRight, Heart, Leaf, Sparkles } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -37,11 +37,24 @@ export default function Hero() {
   };
 
   return (
-    <section className="relative pt-40 pb-24 px-6 overflow-hidden bg-gradient-to-br from-warm-white via-lavender-50/30 to-blush-50/20">
+    <section className="relative pt-40 pb-24 px-6 overflow-hidden bg-gradient-to-br from-warm-white via-sage-50/40 to-mint-50/30">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 -left-20 w-[500px] h-[500px] bg-gradient-to-br from-lavender-200/30 to-blush-200/20 rounded-full blur-3xl animate-breathing"></div>
-        <div className="absolute bottom-1/4 -right-20 w-[500px] h-[500px] bg-gradient-to-br from-sage-200/25 to-mint-200/25 rounded-full blur-3xl animate-breathing" style={{ animationDelay: '3s' }}></div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-br from-paleblue-200/20 to-lavender-200/20 rounded-full blur-3xl animate-breathing" style={{ animationDelay: '6s' }}></div>
+        <div className="absolute top-1/4 -left-20 w-[500px] h-[500px] bg-gradient-to-br from-sage-200/30 to-mint-200/25 rounded-full blur-3xl animate-breathing"></div>
+        <div className="absolute bottom-1/4 -right-20 w-[500px] h-[500px] bg-gradient-to-br from-mint-200/30 to-sage-200/25 rounded-full blur-3xl animate-breathing" style={{ animationDelay: '3s' }}></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-br from-beige-200/15 to-sage-200/20 rounded-full blur-3xl animate-breathing" style={{ animationDelay: '6s' }}></div>
+
+        <div className="absolute top-10 left-1/4 w-16 h-16 opacity-20 animate-float">
+          <Leaf className="w-full h-full text-sage-400" style={{ animationDelay: '0.5s' }} />
+        </div>
+        <div className="absolute top-32 right-1/4 w-12 h-12 opacity-15 animate-float">
+          <Leaf className="w-full h-full text-mint-400" style={{ animationDelay: '1.5s' }} />
+        </div>
+        <div className="absolute bottom-20 left-1/3 w-14 h-14 opacity-10 animate-float">
+          <Sparkles className="w-full h-full text-sage-300" style={{ animationDelay: '2.5s' }} />
+        </div>
+        <div className="absolute bottom-32 right-1/3 w-10 h-10 opacity-20 animate-float">
+          <Leaf className="w-full h-full text-mint-300" style={{ animationDelay: '3.5s' }} />
+        </div>
       </div>
 
       <div className="container mx-auto max-w-5xl relative z-10">
