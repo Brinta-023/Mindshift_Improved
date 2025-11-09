@@ -1,11 +1,35 @@
-import { QrCode, ArrowRight, Sparkles } from 'lucide-react';
-import { useState } from 'react';
+import { QrCode, ArrowRight, Heart } from 'lucide-react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export default function Hero() {
   const [email, setEmail] = useState('');
   const [isHovered, setIsHovered] = useState(false);
+  const [typingText, setTypingText] = useState('');
+  const [currentPhraseIndex, setCurrentPhraseIndex] = useState(0);
   const navigate = useNavigate();
+
+  const phrases = ['find your calm', "you're safe here"];
+
+  useEffect(() => {
+    const currentPhrase = phrases[currentPhraseIndex];
+    let charIndex = 0;
+    setTypingText('');
+
+    const typingInterval = setInterval(() => {
+      if (charIndex <= currentPhrase.length) {
+        setTypingText(currentPhrase.slice(0, charIndex));
+        charIndex++;
+      } else {
+        clearInterval(typingInterval);
+        setTimeout(() => {
+          setCurrentPhraseIndex((prev) => (prev + 1) % phrases.length);
+        }, 2000);
+      }
+    }, 100);
+
+    return () => clearInterval(typingInterval);
+  }, [currentPhraseIndex]);
 
   const handleWaitlistSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,20 +58,18 @@ export default function Hero() {
               you're not alone. let's reframe those thoughts and reshape your world.
             </p>
 
-            <div className="flex items-center justify-center gap-4 text-soft-gray/60 text-sm font-light pt-2" style={{ animationDelay: '0.4s' }}>
-              <span className="hidden sm:block">→</span>
-              <span>find your calm</span>
-              <span className="hidden sm:block">·</span>
-              <span>you're safe here</span>
-              <span className="hidden sm:block">←</span>
+            <div className="flex items-center justify-center gap-3 text-forest text-sm font-light pt-2" style={{ animationDelay: '0.4s' }}>
+              <Heart className="w-4 h-4" />
+              <span className="min-w-[140px] text-center">{typingText}<span className="animate-pulse">|</span></span>
+              <Heart className="w-4 h-4" />
             </div>
           </div>
 
           <div className="bg-white/60 backdrop-blur-md p-10 rounded-[2.5rem] shadow-xl border border-sage-100/30 max-w-xl mx-auto animate-fade-in hover:shadow-2xl transition-all duration-500" style={{ animationDelay: '0.6s' }}>
             <div className="space-y-6">
               <div className="space-y-2">
-                <h3 className="text-xl font-semibold text-soft-gray">take your first gentle step</h3>
-                <p className="text-sm text-gentle-gray/70">we'll be right here with you</p>
+                <h3 className="text-xl font-semibold text-forest">take your first gentle step</h3>
+                <p className="text-sm text-forest/70">we'll be right here with you</p>
               </div>
 
               <form onSubmit={handleWaitlistSubmit} className="space-y-6">
@@ -78,7 +100,7 @@ export default function Hero() {
 
                 <div className="flex items-center gap-3">
                   <div className="flex-1 border-t border-sage-200/40"></div>
-                  <span className="text-xs text-gentle-gray/50 lowercase">or scan to start</span>
+                  <span className="text-xs text-forest/60 lowercase">or scan to start</span>
                   <div className="flex-1 border-t border-sage-200/40"></div>
                 </div>
 
@@ -91,10 +113,6 @@ export default function Hero() {
             </div>
           </div>
 
-          <div className="flex items-center justify-center gap-2 text-gentle-gray/50 text-sm animate-pulse-gentle">
-            <Sparkles className="w-4 h-4" />
-            <span className="lowercase italic">healing starts with kindness</span>
-          </div>
         </div>
       </div>
     </section>
