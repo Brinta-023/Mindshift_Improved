@@ -70,12 +70,12 @@ export default function HowItWorks() {
   }, []);
 
   const ringPositions = [
-    { cx: 50, cy: 50, r: 8, angle: 0 },
-    { cx: 50, cy: 50, r: 15, angle: 60 },
-    { cx: 50, cy: 50, r: 22, angle: 120 },
-    { cx: 50, cy: 50, r: 29, angle: 180 },
-    { cx: 50, cy: 50, r: 36, angle: 240 },
-    { cx: 50, cy: 50, r: 43, angle: 300 },
+    { cx: 50, cy: 50, r: 43, angle: 90 },
+    { cx: 50, cy: 50, r: 36, angle: 150 },
+    { cx: 50, cy: 50, r: 29, angle: 210 },
+    { cx: 50, cy: 50, r: 22, angle: 270 },
+    { cx: 50, cy: 50, r: 15, angle: 330 },
+    { cx: 50, cy: 50, r: 8, angle: 30 },
   ];
 
   const getCardPosition = (index: number) => {
@@ -109,7 +109,7 @@ export default function HowItWorks() {
 
           {ringPositions.map((ring, i) => {
             const wobble = i * 0.15;
-            const isVisible = i <= activeStep;
+            const isActive = i === activeStep;
             return (
               <circle
                 key={i}
@@ -119,13 +119,13 @@ export default function HowItWorks() {
                 fill="none"
                 stroke="#4a4a4a"
                 strokeWidth={i % 2 === 0 ? "0.25" : "0.15"}
-                opacity={isVisible ? 0.35 - i * 0.02 : 0}
+                opacity={isActive ? 0.4 : 0}
                 filter="url(#roughen)"
-                className="transition-all duration-1000 ease-out"
+                className="transition-all duration-700 ease-in-out"
                 style={{
                   strokeDasharray: `${wobble} ${wobble * 0.5}`,
                   strokeLinecap: 'round',
-                  transform: isVisible ? 'scale(1)' : 'scale(0.5)',
+                  transform: isActive ? 'scale(1)' : 'scale(0.8)',
                   transformOrigin: 'center',
                 }}
               />
@@ -148,6 +148,7 @@ export default function HowItWorks() {
           {steps.map((step, index) => {
             const Icon = step.icon;
             const position = getCardPosition(index);
+            const isActive = index === activeStep;
 
             return (
               <div
@@ -157,11 +158,13 @@ export default function HowItWorks() {
                 style={{ minHeight: '20vh' }}
               >
                 <div
-                  className="absolute"
+                  className="absolute transition-all duration-700 ease-in-out"
                   style={{
                     left: '50%',
                     top: '50%',
-                    transform: `translate(calc(-50% + ${position.x}px), calc(-50% + ${position.y}px))`,
+                    transform: `translate(calc(-50% + ${position.x}px), calc(-50% + ${position.y}px)) scale(${isActive ? 1 : 0.8})`,
+                    opacity: isActive ? 1 : 0,
+                    pointerEvents: isActive ? 'auto' : 'none',
                   }}
                 >
                   <div className="bg-warm-white p-6 rounded-2xl shadow-xl border-2 border-forest/10 hover:shadow-2xl hover:border-forest/20 transition-all relative w-72">
