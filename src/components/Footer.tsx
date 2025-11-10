@@ -114,7 +114,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="pt-8 border-t border-sage-600 text-center text-white/70 text-sm">
+        <div className="pt-8 text-center text-white/70 text-sm">
           <p>&copy; {new Date().getFullYear()} MindShift. All rights reserved.</p>
           <p className="mt-2">
             MindShift is not a substitute for professional medical advice, diagnosis, or treatment.

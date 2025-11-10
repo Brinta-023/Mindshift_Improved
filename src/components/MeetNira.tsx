@@ -96,7 +96,7 @@ export default function MeetNira() {
                 ))}
               </div>
 
-              <div className="p-6 bg-white/60 backdrop-blur-md border-t border-lavender-100/40">
+              <div className="p-6 bg-white/60 backdrop-blur-md">
                 <div className="flex items-center gap-3">
                   <button className="p-3 hover:bg-sage-50 dark:bg-gray-700/50/60 rounded-full transition-all" title="voice input">
                     <Mic className="w-5 h-5 text-sage-500/70" strokeWidth={1.5} />

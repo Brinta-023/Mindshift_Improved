@@ -33,7 +33,7 @@ const resources = [
 
 export default function Resources() {
   return (
-    <section id="resources" className="py-20 px-6 bg-warm-white">
+    <section id="resources" className="py-20 px-6 bg-gradient-to-b from-sage-50/30 via-warm-white to-mint-50/20 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 relative overflow-hidden">
       <div className="container mx-auto max-w-7xl">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-forest mb-4">

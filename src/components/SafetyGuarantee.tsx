@@ -50,7 +50,7 @@ export default function SafetyGuarantee() {
               </p>
             </div>
 
-            <div className="text-center bg-beige-50/60 p-6 rounded-[2rem] border-2 border-beige-100/30 hover:shadow-lg hover:-translate-y-1 transition-all group animate-fade-in" style={{ animationDelay: '0.5s' }}>
+            <div className="text-center bg-beige-50/60 dark:bg-gray-800 p-6 rounded-[2rem] hover:shadow-lg hover:-translate-y-1 transition-all group animate-fade-in" style={{ animationDelay: '0.5s' }}>
               <div className="inline-flex items-center justify-center w-14 h-14 bg-gradient-to-br from-beige-500 to-mint-500 rounded-full mb-4 shadow-md group-hover:scale-110 transition-transform">
                 <Heart className="w-7 h-7 text-white" strokeWidth={2} />
               </div>
@@ -61,7 +61,7 @@ export default function SafetyGuarantee() {
             </div>
           </div>
 
-          <div className="mt-8 pt-8 border-t border-sage-200 dark:border-gray-600 text-center animate-fade-in" style={{ animationDelay: '0.6s' }}>
+          <div className="mt-12 text-center animate-fade-in" style={{ animationDelay: '0.6s' }}>
             <p className="text-forest font-semibold mb-4 text-lg">
               If you're experiencing a crisis or thoughts of self-harm:
             </p>

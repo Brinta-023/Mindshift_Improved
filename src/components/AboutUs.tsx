@@ -67,7 +67,7 @@ export default function AboutUs() {
               </div>
             </div>
 
-            <div className="bg-white/80 backdrop-blur-sm p-6 rounded-[2rem] border-2 border-beige-100/50 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all group relative overflow-hidden animate-fade-in" style={{ animationDelay: '0.3s' }}>
+            <div className="bg-white/80 dark:bg-gray-800 backdrop-blur-sm p-6 rounded-[2rem] shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all group relative overflow-hidden animate-fade-in" style={{ animationDelay: '0.3s' }}>
               <div className="flex items-start gap-4 relative">
                 <div className="w-14 h-14 bg-gradient-to-br from-beige-500 to-sage-500 rounded-[1.5rem] flex items-center justify-center flex-shrink-0 shadow-md group-hover:scale-110 transition-transform">
                   <Users className="w-7 h-7 text-white" strokeWidth={2} />
