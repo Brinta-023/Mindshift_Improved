@@ -86,8 +86,8 @@ export default function RightPanel({ selectedRegion }: RightPanelProps) {
 
   return (
     <>
-      <aside className="w-80 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-l border-sage-100 dark:border-gray-700 overflow-y-auto transition-colors">
-        <div className="p-6 space-y-6">
+      <aside className="w-96 bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm border-l border-sage-100/50 dark:border-gray-700 overflow-y-auto transition-colors">
+        <div className="p-8 space-y-8">
           <button
             onClick={() => setShowSOSModal(true)}
             className="w-full py-4 bg-gradient-to-r from-red-500 to-orange-500 text-white rounded-[1rem] font-bold text-lg shadow-lg hover:shadow-xl transition-all hover:scale-105 flex items-center justify-center gap-2"

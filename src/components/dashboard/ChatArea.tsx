@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Bot, User, Mic, Smile, Send, Volume2 } from 'lucide-react';
+import { Bot, User, Mic, Smile, Send, Volume2, Brain } from 'lucide-react';
 
 interface Message {
   id: string;
@@ -60,58 +60,58 @@ export default function ChatArea() {
   };
 
   return (
-    <div className="h-full flex flex-col bg-white dark:bg-gray-800 rounded-[1.5rem] shadow-lg border border-sage-100 dark:border-gray-700 overflow-hidden transition-colors">
-      <div className="bg-gradient-to-r from-sage-600 to-mint-600 p-4 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center">
-            <Bot className="w-6 h-6 text-blue-600" />
+    <div className="h-full flex flex-col bg-warm-white dark:bg-gray-800 rounded-2xl shadow-xl border border-sage-100/50 dark:border-gray-700 overflow-hidden transition-colors">
+      <div className="bg-gradient-to-r from-forest to-sage-600 p-6 flex items-center justify-between">
+        <div className="flex items-center gap-4">
+          <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center shadow-lg">
+            <Brain className="w-8 h-8 text-forest" />
           </div>
           <div>
-            <h3 className="text-white font-semibold">NIRA</h3>
-            <div className="flex items-center gap-1">
-              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-              <span className="text-blue-100 text-xs">Online</span>
+            <h3 className="text-white font-bold text-lg lowercase">nira</h3>
+            <div className="flex items-center gap-2">
+              <div className="w-2.5 h-2.5 bg-mint-400 rounded-full animate-gentle-pulse shadow-sm"></div>
+              <span className="text-sage-100 text-sm lowercase">here for you</span>
             </div>
           </div>
         </div>
         <button
-          className="p-2 hover:bg-white/10 rounded-[1rem] transition-colors"
+          className="p-2.5 hover:bg-white/10 rounded-xl transition-all hover:scale-105"
           title="Audio settings"
         >
           <Volume2 className="w-5 h-5 text-white" />
         </button>
       </div>
 
-      <div className="flex-1 overflow-y-auto p-6 space-y-6 bg-gradient-to-b from-blue-50/30 to-teal-50/20 dark:from-gray-900 dark:to-gray-800">
+      <div className="flex-1 overflow-y-auto p-8 space-y-6 bg-gradient-to-b from-sage-50/30 via-warm-white to-mint-50/20 dark:from-gray-900 dark:to-gray-800">
         {messages.map((message) => (
           <div
             key={message.id}
-            className={`flex gap-3 ${message.type === 'user' ? 'flex-row-reverse' : 'flex-row'}`}
+            className={`flex gap-4 ${message.type === 'user' ? 'flex-row-reverse' : 'flex-row'}`}
           >
             <div
-              className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
+              className={`w-10 h-10 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-md ${
                 message.type === 'bot'
-                  ? 'bg-gradient-to-br from-sage-500 to-mint-500'
-                  : 'bg-gradient-to-br from-blue-600 to-blue-700'
+                  ? 'bg-gradient-to-br from-forest to-sage-600'
+                  : 'bg-gradient-to-br from-beige-400 to-beige-500'
               }`}
             >
               {message.type === 'bot' ? (
-                <Bot className="w-5 h-5 text-white" />
+                <Brain className="w-5 h-5 text-white" />
               ) : (
                 <User className="w-5 h-5 text-white" />
               )}
             </div>
-            <div className={`max-w-[70%] ${message.type === 'user' ? 'items-end' : 'items-start'} flex flex-col`}>
+            <div className={`max-w-[65%] ${message.type === 'user' ? 'items-end' : 'items-start'} flex flex-col gap-2`}>
               <div
-                className={`px-4 py-3 rounded-[1.5rem] ${
+                className={`px-6 py-4 rounded-2xl shadow-md ${
                   message.type === 'bot'
-                    ? 'bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 shadow-sm'
-                    : 'bg-gradient-to-r from-blue-600 to-blue-700 text-white'
+                    ? 'bg-sage-100 dark:bg-gray-700 text-forest dark:text-gray-100 border border-sage-200/50 dark:border-gray-600'
+                    : 'bg-beige-100 dark:bg-beige-800 text-soft-gray dark:text-white border border-beige-200/50 dark:border-beige-700'
                 }`}
               >
-                <p className="text-sm leading-relaxed">{message.text}</p>
+                <p className="text-base leading-relaxed">{message.text}</p>
               </div>
-              <span className="text-xs text-gray-500 dark:text-gray-400 mt-1 px-2">
+              <span className="text-xs text-sage-500 dark:text-gray-400 px-3">
                 {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
               </span>
             </div>
@@ -120,38 +120,38 @@ export default function ChatArea() {
         <div ref={messagesEndRef} />
       </div>
 
-      <div className="p-4 bg-white dark:bg-gray-800 border-t border-sage-100 dark:border-gray-700">
-        <div className="flex items-end gap-2">
+      <div className="p-6 bg-white/90 dark:bg-gray-800 border-t border-sage-100/50 dark:border-gray-700">
+        <div className="flex items-end gap-3">
           <button
             onClick={() => setIsRecording(!isRecording)}
-            className={`p-3 rounded-full transition-all ${
+            className={`p-3.5 rounded-2xl transition-all shadow-md ${
               isRecording
                 ? 'bg-red-500 hover:bg-red-600 animate-pulse'
-                : 'bg-gradient-to-r from-sage-600 to-mint-600 hover:shadow-lg'
+                : 'bg-gradient-to-br from-forest to-sage-600 hover:shadow-lg hover:scale-105'
             }`}
             title={isRecording ? 'Stop recording' : 'Voice input'}
           >
             <Mic className="w-6 h-6 text-white" />
           </button>
 
-          <div className="flex-1 flex flex-col gap-2">
+          <div className="flex-1 flex flex-col gap-3">
             <textarea
               value={inputText}
               onChange={(e) => setInputText(e.target.value)}
               onKeyPress={handleKeyPress}
-              placeholder="Type your message..."
-              className="w-full px-4 py-3 rounded-[1.5rem] border border-sage-200 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors text-sm resize-none"
+              placeholder="share your thoughts with nira..."
+              className="w-full px-6 py-4 rounded-2xl border border-sage-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-forest focus:border-transparent transition-colors text-base resize-none shadow-sm placeholder-sage-400 dark:placeholder-gray-500 lowercase"
               rows={2}
             />
-            <div className="flex items-center justify-between px-2">
+            <div className="flex items-center justify-between px-3">
               <button
-                className="p-2 hover:bg-blue-50 dark:hover:bg-gray-700 rounded-[1rem] transition-colors"
+                className="p-2 hover:bg-sage-100 dark:hover:bg-gray-700 rounded-xl transition-all hover:scale-105"
                 title="Emoji picker"
               >
-                <Smile className="w-5 h-5 text-sage-600 dark:text-sage-400" />
+                <Smile className="w-5 h-5 text-forest dark:text-sage-400" />
               </button>
-              <span className="text-xs text-gray-500 dark:text-gray-400">
-                Press Enter to send
+              <span className="text-xs text-sage-500 dark:text-gray-400 lowercase">
+                press enter to send
               </span>
             </div>
           </div>
@@ -159,7 +159,7 @@ export default function ChatArea() {
           <button
             onClick={handleSendMessage}
             disabled={!inputText.trim()}
-            className="p-3 bg-gradient-to-r from-sage-600 to-mint-600 text-white rounded-full hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            className="p-3.5 bg-gradient-to-br from-forest to-sage-600 text-white rounded-2xl hover:shadow-lg transition-all disabled:opacity-40 disabled:cursor-not-allowed hover:scale-105 shadow-md"
             title="Send message"
           >
             <Send className="w-6 h-6" />

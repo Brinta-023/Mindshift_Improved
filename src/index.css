@@ -390,6 +390,39 @@
     }
   }
 
+  @keyframes gentle-pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.6;
+    }
+  }
+
+  @keyframes celebration-bounce {
+    0%, 100% {
+      transform: scale(1);
+    }
+    25% {
+      transform: scale(1.05) rotate(-2deg);
+    }
+    50% {
+      transform: scale(1.1) rotate(2deg);
+    }
+    75% {
+      transform: scale(1.05) rotate(-1deg);
+    }
+  }
+
+  @keyframes blob-morph {
+    0%, 100% {
+      border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    }
+    50% {
+      border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+    }
+  }
+
   .animate-streak-glow {
     animation: streak-glow 1.5s ease-in-out;
   }
@@ -408,6 +441,18 @@
 
   .animate-chat-slide-fade {
     animation: chat-slide-fade 0.3s ease-out;
+  }
+
+  .animate-gentle-pulse {
+    animation: gentle-pulse 2s ease-in-out infinite;
+  }
+
+  .animate-celebration-bounce {
+    animation: celebration-bounce 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+
+  .animate-blob-morph {
+    animation: blob-morph 8s ease-in-out infinite;
   }
 
   .tree-ring {
