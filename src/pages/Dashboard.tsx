@@ -17,18 +17,26 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen relative overflow-hidden">
-      <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-10 dark:opacity-5">
+      <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-[0.15] dark:opacity-[0.08]">
         <TreeRing
-          ringCount={12}
-          className="absolute -top-20 -left-20 w-[400px] h-[400px]"
-        />
-        <TreeRing
-          ringCount={8}
-          className="absolute top-1/3 -right-10 w-[300px] h-[300px]"
+          ringCount={15}
+          className="absolute -top-32 -left-32 w-[500px] h-[500px] rotate-12"
         />
         <TreeRing
           ringCount={10}
-          className="absolute -bottom-20 left-1/4 w-[350px] h-[350px]"
+          className="absolute top-1/4 -right-20 w-[350px] h-[350px] -rotate-6"
+        />
+        <TreeRing
+          ringCount={12}
+          className="absolute -bottom-28 left-1/4 w-[400px] h-[400px] rotate-45"
+        />
+        <TreeRing
+          ringCount={8}
+          className="absolute bottom-1/3 right-1/4 w-[280px] h-[280px] -rotate-12"
+        />
+        <TreeRing
+          ringCount={6}
+          className="absolute top-2/3 left-1/3 w-[200px] h-[200px] rotate-90"
         />
       </div>
 
