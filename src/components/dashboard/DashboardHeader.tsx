@@ -1,5 +1,5 @@
 import { Moon, Sun, User, ChevronDown, LogOut, Settings, UserCircle } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 
@@ -29,6 +29,8 @@ export default function DashboardHeader({
 }: DashboardHeaderProps) {
   const [showRegionMenu, setShowRegionMenu] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const regionMenuRef = useRef<HTMLDivElement>(null);
+  const profileMenuRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const { signOut } = useAuth();
 
@@ -36,6 +38,20 @@ export default function DashboardHeader({
     await signOut();
     navigate('/login');
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (regionMenuRef.current && !regionMenuRef.current.contains(event.target as Node)) {
+        setShowRegionMenu(false);
+      }
+      if (profileMenuRef.current && !profileMenuRef.current.contains(event.target as Node)) {
+        setShowProfileMenu(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   return (
     <header className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl px-6 py-4 transition-colors">
@@ -47,7 +63,7 @@ export default function DashboardHeader({
         </div>
 
         <div className="flex items-center gap-4">
-          <div className="relative">
+          <div className="relative" ref={regionMenuRef}>
             <button
               onClick={() => setShowRegionMenu(!showRegionMenu)}
               className="flex items-center gap-2 px-4 py-2 rounded-[1rem] border-2 border-sage-200 dark:border-gray-600 hover:bg-sage-50 dark:hover:bg-gray-700 transition-colors lowercase"
@@ -59,7 +75,7 @@ export default function DashboardHeader({
             </button>
 
             {showRegionMenu && (
-              <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-gray-800 rounded-[1.5rem] shadow-xl border-2 border-sage-100 dark:border-gray-700 py-2 z-50">
+              <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-gray-800 rounded-[1.5rem] shadow-xl border-2 border-sage-100 dark:border-gray-700 py-2 z-[100]">
                 {regions.map((region) => (
                   <button
                     key={region.code}
@@ -90,7 +106,7 @@ export default function DashboardHeader({
             )}
           </button>
 
-          <div className="relative">
+          <div className="relative" ref={profileMenuRef}>
             <button
               onClick={() => setShowProfileMenu(!showProfileMenu)}
               className="flex items-center gap-2 p-2 rounded-[1rem] border-2 border-sage-200 dark:border-gray-600 hover:bg-sage-50 dark:hover:bg-gray-700 transition-colors"
@@ -101,7 +117,7 @@ export default function DashboardHeader({
             </button>
 
             {showProfileMenu && (
-              <div className="absolute right-0 mt-2 w-52 bg-white dark:bg-gray-800 rounded-[1.5rem] shadow-xl border-2 border-sage-100 dark:border-gray-700 py-2 z-50">
+              <div className="absolute right-0 mt-2 w-52 bg-white dark:bg-gray-800 rounded-[1.5rem] shadow-xl border-2 border-sage-100 dark:border-gray-700 py-2 z-[100]">
                 <button className="w-full text-left px-4 py-2 hover:bg-sage-50 dark:hover:bg-gray-700 transition-colors text-soft-gray dark:text-gray-200 flex items-center gap-3 rounded-[1rem] mx-2 lowercase">
                   <UserCircle className="w-4 h-4" />
                   <span>my profile</span>
