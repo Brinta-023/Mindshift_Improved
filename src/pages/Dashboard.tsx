@@ -5,6 +5,7 @@ import ChatArea from '../components/dashboard/ChatArea';
 import JournalArea from '../components/dashboard/JournalArea';
 import RightPanel from '../components/dashboard/RightPanel';
 import SettingsPanel from '../components/dashboard/SettingsPanel';
+import TreeRing from '../components/TreeRing';
 import { useTheme } from '../contexts/ThemeContext';
 
 type View = 'chat' | 'journal' | 'settings' | 'goals';
@@ -15,8 +16,23 @@ export default function Dashboard() {
   const { isDark, toggleTheme } = useTheme();
 
   return (
-    <div className="min-h-screen">
-      <div className="flex h-screen bg-gradient-to-br from-warm-white via-mint-50/20 to-sage-50/30 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 transition-colors">
+    <div className="min-h-screen relative overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-10 dark:opacity-5">
+        <TreeRing
+          ringCount={12}
+          className="absolute -top-20 -left-20 w-[400px] h-[400px]"
+        />
+        <TreeRing
+          ringCount={8}
+          className="absolute top-1/3 -right-10 w-[300px] h-[300px]"
+        />
+        <TreeRing
+          ringCount={10}
+          className="absolute -bottom-20 left-1/4 w-[350px] h-[350px]"
+        />
+      </div>
+
+      <div className="flex h-screen bg-gradient-to-br from-warm-white via-mint-50/20 to-sage-50/30 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 transition-colors relative">
         <Sidebar currentView={currentView} onViewChange={setCurrentView} />
 
         <div className="flex-1 flex flex-col overflow-hidden">
