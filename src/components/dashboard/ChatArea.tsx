@@ -56,7 +56,7 @@ export default function ChatArea() {
         }]);
         setTypingMessages(new Set());
       }
-    }, 30);
+    }, 50);
 
     return () => clearInterval(typingInterval);
   }, []);
@@ -112,7 +112,7 @@ export default function ChatArea() {
               return newSet;
             });
           }
-        }, 30);
+        }, 50);
       }, 1000);
     }
   };
