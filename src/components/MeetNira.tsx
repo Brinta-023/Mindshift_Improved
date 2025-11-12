@@ -6,7 +6,7 @@ export default function MeetNira() {
   const [visibleMessages, setVisibleMessages] = useState(0);
 
   const messages = [
-    { type: 'bot', text: "hi there 🌿 i'm nira — i'm here to listen, no rush." },
+    { type: 'bot', text: "hi there 🌿 i'm Nira — i'm here to listen, no rush." },
     { type: 'user', text: "i've been feeling pretty heavy lately..." },
     { type: 'bot', text: "i hear you. that sounds really tough. want to tell me what's been weighing on you?" },
     { type: 'user', text: "just everything... work, life, it all feels like too much" },
@@ -35,7 +35,7 @@ export default function MeetNira() {
       <div className="container mx-auto max-w-7xl">
         <div className="text-center mb-16 space-y-4 animate-fade-in">
           <h2 className="text-4xl md:text-5xl font-bold text-soft-gray dark:text-gray-300 transition-colors">
-            meet nira, your companion
+            meet Nira, your companion
           </h2>
           <p className="text-xl text-forest/70 max-w-2xl mx-auto font-serif italic">
             a gentle presence, here to hold space for you
