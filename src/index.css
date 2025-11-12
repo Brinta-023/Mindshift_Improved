@@ -530,6 +530,34 @@
     animation: progress-shimmer 2s linear infinite;
   }
 
+  @keyframes avatar-thinking {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+  }
+
+  @keyframes thinking-dot {
+    0%, 60%, 100% {
+      transform: translateY(0);
+      opacity: 0.5;
+    }
+    30% {
+      transform: translateY(-8px);
+      opacity: 1;
+    }
+  }
+
+  .animate-avatar-thinking {
+    animation: avatar-thinking 2s ease-in-out infinite;
+  }
+
+  .animate-thinking-dot {
+    animation: thinking-dot 1.4s ease-in-out infinite;
+  }
+
   .tree-ring {
     position: relative;
     background: transparent;

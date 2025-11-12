@@ -128,8 +128,12 @@ export default function ChatArea() {
     <div className="h-full flex flex-col bg-warm-white dark:bg-gray-800 rounded-2xl shadow-xl border border-sage-100/50 dark:border-gray-700 overflow-hidden transition-colors">
       <div className="bg-gradient-to-r from-[#8B9D83] to-[#A8B5A0] p-6 flex items-center justify-between shadow-md">
         <div className="flex items-center gap-4">
-          <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center shadow-lg">
-            <Brain className="w-8 h-8 text-forest" />
+          <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center shadow-lg overflow-hidden" style={{ boxShadow: '0 0 16px rgba(139, 157, 131, 0.2)' }}>
+            <img
+              src="/Gemini_Generated_Image_jnzolrjnzolrjnzo.png"
+              alt="NIRA Avatar"
+              className="w-12 h-12 object-cover rounded-2xl"
+            />
           </div>
           <div>
             <h3 className="text-white font-bold text-lg lowercase">nira</h3>
@@ -154,31 +158,48 @@ export default function ChatArea() {
             className={`flex gap-4 ${message.type === 'user' ? 'flex-row-reverse' : 'flex-row'}`}
           >
             <div
-              className={`w-10 h-10 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-md ${
+              className={`w-10 h-10 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-md overflow-hidden ${
                 message.type === 'bot'
-                  ? 'bg-gradient-to-br from-forest to-sage-600'
+                  ? 'bg-white'
                   : 'bg-gradient-to-br from-beige-400 to-beige-500'
               }`}
+              style={message.type === 'bot' ? { boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)' } : {}}
             >
               {message.type === 'bot' ? (
-                <Brain className="w-5 h-5 text-white" />
+                <img
+                  src="/Gemini_Generated_Image_jnzolrjnzolrjnzo.png"
+                  alt="NIRA"
+                  className={`w-9 h-9 object-cover rounded-2xl ${message.isTyping ? 'animate-avatar-thinking' : ''}`}
+                />
               ) : (
                 <User className="w-5 h-5 text-white" />
               )}
             </div>
             <div className={`max-w-[65%] ${message.type === 'user' ? 'items-end' : 'items-start'} flex flex-col gap-2`}>
-              <div
-                className={`px-6 py-4 rounded-2xl shadow-md ${
-                  message.type === 'bot'
-                    ? 'bg-sage-100 dark:bg-gray-700 text-forest dark:text-gray-100 border border-sage-200/50 dark:border-gray-600'
-                    : 'bg-beige-100 dark:bg-beige-800 text-soft-gray dark:text-white border border-beige-200/50 dark:border-beige-700'
-                }`}
-              >
-                <p className="text-base leading-relaxed">
-                  {message.text}
-                  {message.isTyping && <span className="animate-pulse ml-1">|</span>}
-                </p>
-              </div>
+              {message.type === 'bot' && message.isTyping && message.text === '' && (
+                <div className="flex items-center gap-2 px-6 py-4 bg-sage-100 dark:bg-gray-700 rounded-2xl shadow-md border border-sage-200/50 dark:border-gray-600">
+                  <div className="flex gap-1">
+                    <span className="w-2 h-2 bg-sage-600 dark:bg-sage-400 rounded-full animate-thinking-dot" style={{ animationDelay: '0s' }}></span>
+                    <span className="w-2 h-2 bg-sage-600 dark:bg-sage-400 rounded-full animate-thinking-dot" style={{ animationDelay: '0.2s' }}></span>
+                    <span className="w-2 h-2 bg-sage-600 dark:bg-sage-400 rounded-full animate-thinking-dot" style={{ animationDelay: '0.4s' }}></span>
+                  </div>
+                  <span className="text-sm text-sage-600 dark:text-sage-400">NIRA is thinking...</span>
+                </div>
+              )}
+              {(message.text || !message.isTyping) && (
+                <div
+                  className={`px-6 py-4 rounded-2xl shadow-md ${
+                    message.type === 'bot'
+                      ? 'bg-sage-100 dark:bg-gray-700 text-forest dark:text-gray-100 border border-sage-200/50 dark:border-gray-600'
+                      : 'bg-beige-100 dark:bg-beige-800 text-soft-gray dark:text-white border border-beige-200/50 dark:border-beige-700'
+                  }`}
+                >
+                  <p className="text-base leading-relaxed">
+                    {message.text}
+                    {message.isTyping && <span className="animate-pulse ml-1">|</span>}
+                  </p>
+                </div>
+              )}
               <span className="text-xs text-sage-500 dark:text-gray-400 px-3">
                 {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
               </span>
