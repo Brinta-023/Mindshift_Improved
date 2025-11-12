@@ -117,7 +117,7 @@ export default function DashboardHeader({
             </button>
 
             {showProfileMenu && (
-              <div className="absolute right-0 mt-2 w-52 bg-white dark:bg-gray-800 rounded-2xl shadow-2xl border-2 border-sage-200 dark:border-gray-600 py-3 z-[1000]">
+              <div className="absolute right-0 mt-2 w-52 bg-white dark:bg-gray-800 rounded-2xl shadow-2xl border-2 border-sage-200 dark:border-gray-600 py-3 z-[2000]">
                 <button className="w-full text-left px-5 py-3 hover:bg-sage-100 dark:hover:bg-gray-700 transition-all text-soft-gray dark:text-gray-200 flex items-center gap-3 rounded-xl mx-2 lowercase text-base">
                   <UserCircle className="w-5 h-5" />
                   <span>my profile</span>
