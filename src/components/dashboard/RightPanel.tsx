@@ -1,4 +1,4 @@
-import { AlertCircle, TrendingUp, Flame, Target, Bell, Check } from 'lucide-react';
+import { AlertCircle, TrendingUp, Flame, Target, Bell, ChevronDown, ChevronUp, Award } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
 interface RightPanelProps {
@@ -52,6 +52,7 @@ export default function RightPanel({ selectedRegion }: RightPanelProps) {
   const [showSOSModal, setShowSOSModal] = useState(false);
   const [streakCelebration, setStreakCelebration] = useState(false);
   const [completedGoals, setCompletedGoals] = useState<Set<string>>(new Set());
+  const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set(['streak', 'goals']));
 
   const contacts = regionalContacts[selectedRegion] || regionalContacts.US;
 
@@ -72,6 +73,18 @@ export default function RightPanel({ selectedRegion }: RightPanelProps) {
     });
   };
 
+  const toggleSection = (section: string) => {
+    setExpandedSections(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(section)) {
+        newSet.delete(section);
+      } else {
+        newSet.add(section);
+      }
+      return newSet;
+    });
+  };
+
   const moodData = [
     { date: 'Mon', mood: 7 },
     { date: 'Tue', mood: 6 },
@@ -87,176 +100,242 @@ export default function RightPanel({ selectedRegion }: RightPanelProps) {
   return (
     <>
       <aside className="w-96 bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm border-l border-sage-100/50 dark:border-gray-700 overflow-y-auto transition-colors">
-        <div className="p-8 space-y-8">
+        <div className="p-6 space-y-4">
           <button
             onClick={() => setShowSOSModal(true)}
-            className="w-full py-4 bg-gradient-to-r from-red-500 to-orange-500 text-white rounded-[1rem] font-bold text-lg shadow-lg hover:shadow-xl transition-all hover:scale-105 flex items-center justify-center gap-2"
+            className="w-full py-3 bg-gradient-to-r from-red-500 to-orange-500 text-white rounded-xl font-semibold text-base shadow-lg hover:shadow-xl transition-all hover:scale-[1.02] flex items-center justify-center gap-2"
           >
-            <AlertCircle className="w-6 h-6" />
+            <AlertCircle className="w-5 h-5" />
             SOS - Get Help Now
           </button>
 
-          <div
-            className={`bg-gradient-to-br from-sage-50 to-mint-50 dark:from-gray-700 dark:to-gray-600 rounded-[1.5rem] p-4 transition-all cursor-pointer ${streakCelebration ? 'animate-streak-glow animate-streak-pop' : ''}`}
-            onClick={triggerStreakCelebration}
-          >
-            <div className="flex items-center gap-2 mb-3">
-              <Flame className="w-5 h-5 text-sage-600 dark:text-sage-400" />
-              <h3 className="font-semibold text-gray-800 dark:text-white lowercase">current streak</h3>
-            </div>
-            <div className="flex items-baseline gap-2">
-              <span className="text-4xl font-bold bg-gradient-to-r from-sage-600 to-mint-600 bg-clip-text text-transparent">
-                7
-              </span>
-              <span className="text-gray-600 dark:text-gray-300 lowercase">days</span>
-            </div>
-            <p className="text-sm text-gray-600 dark:text-gray-400 mt-2 lowercase">
-              keep it up! you're building healthy habits.
-            </p>
+          <div className="bg-white dark:bg-gray-700 rounded-xl border border-sage-100 dark:border-gray-600 overflow-hidden transition-all shadow-sm hover:shadow-md">
+            <button
+              onClick={() => toggleSection('streak')}
+              className="w-full px-4 py-3 flex items-center justify-between hover:bg-sage-50/50 dark:hover:bg-gray-600/50 transition-colors"
+            >
+              <div className="flex items-center gap-2">
+                <Flame className="w-5 h-5 text-orange-500" />
+                <h3 className="font-semibold text-gray-800 dark:text-white">Current Streak</h3>
+              </div>
+              {expandedSections.has('streak') ? (
+                <ChevronUp className="w-4 h-4 text-gray-500" />
+              ) : (
+                <ChevronDown className="w-4 h-4 text-gray-500" />
+              )}
+            </button>
+            {expandedSections.has('streak') && (
+              <div
+                className={`px-4 pb-4 bg-gradient-to-br from-sage-50/50 to-mint-50/50 dark:from-gray-600/30 dark:to-gray-600/30 cursor-pointer transition-all ${streakCelebration ? 'animate-streak-glow' : ''}`}
+                onClick={triggerStreakCelebration}
+              >
+                <div className="flex items-baseline gap-2 mb-2">
+                  <span className="text-5xl font-bold bg-gradient-to-r from-sage-600 to-mint-600 bg-clip-text text-transparent">
+                    7
+                  </span>
+                  <span className="text-lg text-gray-600 dark:text-gray-300 lowercase">days</span>
+                </div>
+                <p className="text-sm text-gray-600 dark:text-gray-400 lowercase">
+                  keep it up! you're building healthy habits.
+                </p>
+              </div>
+            )}
           </div>
 
-          <div className="bg-white dark:bg-gray-700 rounded-[1rem] p-4 border border-blue-100 dark:border-gray-600 transition-colors">
-            <div className="flex items-center gap-2 mb-4">
-              <TrendingUp className="w-5 h-5 text-sage-600 dark:text-sage-400" />
-              <h3 className="font-semibold text-gray-800 dark:text-white lowercase">mood tracker</h3>
-            </div>
-            <div className="space-y-2">
-              <div className="flex items-end justify-between h-32 gap-1">
-                {moodData.map((day) => (
-                  <div key={day.date} className="flex-1 flex flex-col items-center gap-1">
-                    <div
-                      className="w-full bg-gradient-to-t from-sage-500 to-mint-500 rounded-t-lg transition-all hover:opacity-80"
-                      style={{ height: `${(day.mood / maxMood) * 100}%` }}
-                    />
-                    <span className="text-xs text-gray-600 dark:text-gray-400">{day.date}</span>
-                  </div>
-                ))}
+          <div className="bg-white dark:bg-gray-700 rounded-xl border border-sage-100 dark:border-gray-600 overflow-hidden transition-all shadow-sm hover:shadow-md">
+            <button
+              onClick={() => toggleSection('mood')}
+              className="w-full px-4 py-3 flex items-center justify-between hover:bg-sage-50/50 dark:hover:bg-gray-600/50 transition-colors"
+            >
+              <div className="flex items-center gap-2">
+                <TrendingUp className="w-5 h-5 text-teal-500" />
+                <h3 className="font-semibold text-gray-800 dark:text-white">Mood Tracker</h3>
               </div>
-              <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
-                <span>last 7 days</span>
-                <span className="text-teal-600 dark:text-teal-400 font-medium">trending up</span>
+              {expandedSections.has('mood') ? (
+                <ChevronUp className="w-4 h-4 text-gray-500" />
+              ) : (
+                <ChevronDown className="w-4 h-4 text-gray-500" />
+              )}
+            </button>
+            {expandedSections.has('mood') && (
+              <div className="px-4 pb-4 space-y-3">
+                <div className="flex items-end justify-between h-28 gap-1 px-2">
+                  {moodData.map((day) => (
+                    <div key={day.date} className="flex-1 flex flex-col items-center gap-1">
+                      <div
+                        className="w-full bg-gradient-to-t from-sage-500 to-mint-500 rounded-t-md transition-all hover:opacity-80 cursor-pointer"
+                        style={{ height: `${(day.mood / maxMood) * 100}%` }}
+                        title={`${day.date}: ${day.mood}/10`}
+                      />
+                      <span className="text-xs text-gray-600 dark:text-gray-400">{day.date}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 px-2">
+                  <span>last 7 days</span>
+                  <span className="text-teal-600 dark:text-teal-400 font-medium">trending up</span>
+                </div>
               </div>
-            </div>
+            )}
           </div>
 
-          <div className="bg-white dark:bg-gray-700 rounded-[1.5rem] p-4 border border-sage-100 dark:border-gray-600 transition-colors shadow-sm">
-            <div className="flex items-center gap-2 mb-4">
-              <Target className="w-5 h-5 text-sage-600 dark:text-sage-400" />
-              <h3 className="font-semibold text-gray-800 dark:text-white lowercase">goals progress</h3>
-            </div>
-            <div className="space-y-4">
-              <div>
-                <div className="flex items-center justify-between mb-1.5">
-                  <div className="flex items-center gap-2">
-                    <button
-                      onClick={() => toggleGoalCompletion('daily-checkin')}
-                      className="relative w-5 h-5 rounded-full border-2 border-sage-500 dark:border-sage-400 transition-all hover:scale-110"
-                    >
-                      {completedGoals.has('daily-checkin') && (
-                        <div className="absolute inset-0">
-                          <svg className="w-full h-full" viewBox="0 0 24 24">
-                            <circle cx="12" cy="12" r="10" fill="currentColor" className="text-sage-500 dark:text-sage-400 animate-checkmark-circle" />
-                            <path d="M7 13l3 3 7-7" stroke="white" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" className="animate-checkmark-draw" strokeDasharray="100" />
-                          </svg>
-                        </div>
-                      )}
-                    </button>
-                    <span className="text-sm text-gray-700 dark:text-gray-300 lowercase">daily check-in</span>
+          <div className="bg-white dark:bg-gray-700 rounded-xl border border-sage-100 dark:border-gray-600 overflow-hidden transition-all shadow-sm hover:shadow-md">
+            <button
+              onClick={() => toggleSection('goals')}
+              className="w-full px-4 py-3 flex items-center justify-between hover:bg-sage-50/50 dark:hover:bg-gray-600/50 transition-colors"
+            >
+              <div className="flex items-center gap-2">
+                <Target className="w-5 h-5 text-sage-600 dark:text-sage-400" />
+                <h3 className="font-semibold text-gray-800 dark:text-white">Goals Progress</h3>
+              </div>
+              {expandedSections.has('goals') ? (
+                <ChevronUp className="w-4 h-4 text-gray-500" />
+              ) : (
+                <ChevronDown className="w-4 h-4 text-gray-500" />
+              )}
+            </button>
+            {expandedSections.has('goals') && (
+              <div className="px-4 pb-4 space-y-4">
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={() => toggleGoalCompletion('daily-checkin')}
+                        className="relative w-5 h-5 rounded-full border-2 border-sage-500 dark:border-sage-400 transition-all hover:scale-110"
+                      >
+                        {completedGoals.has('daily-checkin') && (
+                          <div className="absolute inset-0">
+                            <svg className="w-full h-full" viewBox="0 0 24 24">
+                              <circle cx="12" cy="12" r="10" fill="currentColor" className="text-sage-500 dark:text-sage-400 animate-checkmark-circle" />
+                              <path d="M7 13l3 3 7-7" stroke="white" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" className="animate-checkmark-draw" strokeDasharray="100" />
+                            </svg>
+                          </div>
+                        )}
+                      </button>
+                      <span className="text-sm text-gray-700 dark:text-gray-300">Daily Check-in</span>
+                    </div>
+                    <span className="text-sm font-semibold text-sage-600 dark:text-sage-400">7/7</span>
                   </div>
-                  <span className="text-sm font-medium text-sage-600 dark:text-sage-400">7/7</span>
+                  <div className="h-2 bg-sage-100 dark:bg-gray-600 rounded-full overflow-hidden">
+                    <div className="h-full bg-gradient-to-r from-sage-500 to-mint-500 rounded-full transition-all duration-500" style={{ width: '100%' }} />
+                  </div>
                 </div>
-                <div className="h-2 bg-sage-100 dark:bg-gray-600 rounded-full overflow-hidden">
-                  <div className="h-full bg-gradient-to-r from-sage-500 to-mint-500 rounded-full transition-all duration-500" style={{ width: '100%' }} />
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={() => toggleGoalCompletion('journal-entries')}
+                        className="relative w-5 h-5 rounded-full border-2 border-sage-500 dark:border-sage-400 transition-all hover:scale-110"
+                      >
+                        {completedGoals.has('journal-entries') && (
+                          <div className="absolute inset-0">
+                            <svg className="w-full h-full" viewBox="0 0 24 24">
+                              <circle cx="12" cy="12" r="10" fill="currentColor" className="text-sage-500 dark:text-sage-400 animate-checkmark-circle" />
+                              <path d="M7 13l3 3 7-7" stroke="white" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" className="animate-checkmark-draw" strokeDasharray="100" />
+                            </svg>
+                          </div>
+                        )}
+                      </button>
+                      <span className="text-sm text-gray-700 dark:text-gray-300">Journal Entries</span>
+                    </div>
+                    <span className="text-sm font-semibold text-sage-600 dark:text-sage-400">4/10</span>
+                  </div>
+                  <div className="h-2 bg-sage-100 dark:bg-gray-600 rounded-full overflow-hidden">
+                    <div className="h-full bg-gradient-to-r from-sage-500 to-mint-500 rounded-full transition-all duration-500" style={{ width: '40%' }} />
+                  </div>
+                </div>
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={() => toggleGoalCompletion('mindfulness')}
+                        className="relative w-5 h-5 rounded-full border-2 border-sage-500 dark:border-sage-400 transition-all hover:scale-110"
+                      >
+                        {completedGoals.has('mindfulness') && (
+                          <div className="absolute inset-0">
+                            <svg className="w-full h-full" viewBox="0 0 24 24">
+                              <circle cx="12" cy="12" r="10" fill="currentColor" className="text-sage-500 dark:text-sage-400 animate-checkmark-circle" />
+                              <path d="M7 13l3 3 7-7" stroke="white" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" className="animate-checkmark-draw" strokeDasharray="100" />
+                            </svg>
+                          </div>
+                        )}
+                      </button>
+                      <span className="text-sm text-gray-700 dark:text-gray-300">Mindfulness Minutes</span>
+                    </div>
+                    <span className="text-sm font-semibold text-sage-600 dark:text-sage-400">45/60</span>
+                  </div>
+                  <div className="h-2 bg-sage-100 dark:bg-gray-600 rounded-full overflow-hidden">
+                    <div className="h-full bg-gradient-to-r from-sage-500 to-mint-500 rounded-full transition-all duration-500" style={{ width: '75%' }} />
+                  </div>
                 </div>
               </div>
-              <div>
-                <div className="flex items-center justify-between mb-1.5">
-                  <div className="flex items-center gap-2">
-                    <button
-                      onClick={() => toggleGoalCompletion('journal-entries')}
-                      className="relative w-5 h-5 rounded-full border-2 border-sage-500 dark:border-sage-400 transition-all hover:scale-110"
-                    >
-                      {completedGoals.has('journal-entries') && (
-                        <div className="absolute inset-0">
-                          <svg className="w-full h-full" viewBox="0 0 24 24">
-                            <circle cx="12" cy="12" r="10" fill="currentColor" className="text-sage-500 dark:text-sage-400 animate-checkmark-circle" />
-                            <path d="M7 13l3 3 7-7" stroke="white" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" className="animate-checkmark-draw" strokeDasharray="100" />
-                          </svg>
-                        </div>
-                      )}
-                    </button>
-                    <span className="text-sm text-gray-700 dark:text-gray-300 lowercase">journal entries</span>
-                  </div>
-                  <span className="text-sm font-medium text-sage-600 dark:text-sage-400">4/10</span>
-                </div>
-                <div className="h-2 bg-sage-100 dark:bg-gray-600 rounded-full overflow-hidden">
-                  <div className="h-full bg-gradient-to-r from-sage-500 to-mint-500 rounded-full transition-all duration-500" style={{ width: '40%' }} />
-                </div>
-              </div>
-              <div>
-                <div className="flex items-center justify-between mb-1.5">
-                  <div className="flex items-center gap-2">
-                    <button
-                      onClick={() => toggleGoalCompletion('mindfulness')}
-                      className="relative w-5 h-5 rounded-full border-2 border-sage-500 dark:border-sage-400 transition-all hover:scale-110"
-                    >
-                      {completedGoals.has('mindfulness') && (
-                        <div className="absolute inset-0">
-                          <svg className="w-full h-full" viewBox="0 0 24 24">
-                            <circle cx="12" cy="12" r="10" fill="currentColor" className="text-sage-500 dark:text-sage-400 animate-checkmark-circle" />
-                            <path d="M7 13l3 3 7-7" stroke="white" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" className="animate-checkmark-draw" strokeDasharray="100" />
-                          </svg>
-                        </div>
-                      )}
-                    </button>
-                    <span className="text-sm text-gray-700 dark:text-gray-300 lowercase">mindfulness minutes</span>
-                  </div>
-                  <span className="text-sm font-medium text-sage-600 dark:text-sage-400">45/60</span>
-                </div>
-                <div className="h-2 bg-sage-100 dark:bg-gray-600 rounded-full overflow-hidden">
-                  <div className="h-full bg-gradient-to-r from-sage-500 to-mint-500 rounded-full transition-all duration-500" style={{ width: '75%' }} />
-                </div>
-              </div>
-            </div>
+            )}
           </div>
 
-          <div className="bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-amber-900/20 dark:to-yellow-900/20 rounded-[1rem] p-4 border border-amber-200 dark:border-amber-800 transition-colors">
-            <div className="flex items-start gap-3">
-              <Bell className="w-5 h-5 text-sage-600 dark:text-sage-400 flex-shrink-0 mt-1" />
-              <div>
-                <h3 className="font-semibold text-gray-800 dark:text-white mb-1">Daily Check-in</h3>
+          <div className="bg-white dark:bg-gray-700 rounded-xl border border-sage-100 dark:border-gray-600 overflow-hidden transition-all shadow-sm hover:shadow-md">
+            <button
+              onClick={() => toggleSection('reminder')}
+              className="w-full px-4 py-3 flex items-center justify-between hover:bg-sage-50/50 dark:hover:bg-gray-600/50 transition-colors"
+            >
+              <div className="flex items-center gap-2">
+                <Bell className="w-5 h-5 text-amber-500" />
+                <h3 className="font-semibold text-gray-800 dark:text-white">Daily Reminder</h3>
+              </div>
+              {expandedSections.has('reminder') ? (
+                <ChevronUp className="w-4 h-4 text-gray-500" />
+              ) : (
+                <ChevronDown className="w-4 h-4 text-gray-500" />
+              )}
+            </button>
+            {expandedSections.has('reminder') && (
+              <div className="px-4 pb-4 bg-gradient-to-br from-amber-50/30 to-yellow-50/30 dark:from-amber-900/10 dark:to-yellow-900/10">
                 <p className="text-sm text-gray-600 dark:text-gray-300">
                   How are you feeling today? Take a moment to chat with NIRA.
                 </p>
               </div>
-            </div>
+            )}
           </div>
 
-          <div className="bg-white dark:bg-gray-700 rounded-[1rem] p-4 border border-blue-100 dark:border-gray-600 transition-colors">
-            <h3 className="font-semibold text-gray-800 dark:text-white mb-3">Recent Achievements</h3>
-            <div className="space-y-2">
-              <div className="flex items-center gap-3 p-2 bg-blue-50 dark:bg-gray-600 rounded-[1rem]">
-                <span className="text-2xl">🎯</span>
-                <div className="flex-1">
-                  <p className="text-sm font-medium text-gray-800 dark:text-white">7-Day Streak!</p>
-                  <p className="text-xs text-gray-600 dark:text-gray-400">Checked in daily</p>
+          <div className="bg-white dark:bg-gray-700 rounded-xl border border-sage-100 dark:border-gray-600 overflow-hidden transition-all shadow-sm hover:shadow-md">
+            <button
+              onClick={() => toggleSection('achievements')}
+              className="w-full px-4 py-3 flex items-center justify-between hover:bg-sage-50/50 dark:hover:bg-gray-600/50 transition-colors"
+            >
+              <div className="flex items-center gap-2">
+                <Award className="w-5 h-5 text-yellow-500" />
+                <h3 className="font-semibold text-gray-800 dark:text-white">Achievements</h3>
+              </div>
+              {expandedSections.has('achievements') ? (
+                <ChevronUp className="w-4 h-4 text-gray-500" />
+              ) : (
+                <ChevronDown className="w-4 h-4 text-gray-500" />
+              )}
+            </button>
+            {expandedSections.has('achievements') && (
+              <div className="px-4 pb-4 space-y-2">
+                <div className="flex items-center gap-3 p-2.5 bg-gradient-to-r from-sage-50 to-mint-50 dark:from-gray-600/30 dark:to-gray-600/30 rounded-lg">
+                  <span className="text-2xl">🎯</span>
+                  <div className="flex-1">
+                    <p className="text-sm font-medium text-gray-800 dark:text-white">7-Day Streak!</p>
+                    <p className="text-xs text-gray-600 dark:text-gray-400">Checked in daily</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3 p-2.5 bg-gradient-to-r from-sage-50 to-mint-50 dark:from-gray-600/30 dark:to-gray-600/30 rounded-lg">
+                  <span className="text-2xl">📝</span>
+                  <div className="flex-1">
+                    <p className="text-sm font-medium text-gray-800 dark:text-white">Journaling Pro</p>
+                    <p className="text-xs text-gray-600 dark:text-gray-400">10 entries written</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3 p-2.5 bg-gradient-to-r from-sage-50 to-mint-50 dark:from-gray-600/30 dark:to-gray-600/30 rounded-lg">
+                  <span className="text-2xl">🌟</span>
+                  <div className="flex-1">
+                    <p className="text-sm font-medium text-gray-800 dark:text-white">Mood Improver</p>
+                    <p className="text-xs text-gray-600 dark:text-gray-400">Positive trend this week</p>
+                  </div>
                 </div>
               </div>
-              <div className="flex items-center gap-3 p-2 bg-blue-50 dark:bg-gray-600 rounded-[1rem]">
-                <span className="text-2xl">📝</span>
-                <div className="flex-1">
-                  <p className="text-sm font-medium text-gray-800 dark:text-white">Journaling Pro</p>
-                  <p className="text-xs text-gray-600 dark:text-gray-400">10 entries written</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-3 p-2 bg-blue-50 dark:bg-gray-600 rounded-[1rem]">
-                <span className="text-2xl">🌟</span>
-                <div className="flex-1">
-                  <p className="text-sm font-medium text-gray-800 dark:text-white">Mood Improver</p>
-                  <p className="text-xs text-gray-600 dark:text-gray-400">Positive trend this week</p>
-                </div>
-              </div>
-            </div>
+            )}
           </div>
         </div>
       </aside>
